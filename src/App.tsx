@@ -6,13 +6,15 @@ import SideBar from "./components/SideBar";
 
 function App() {
   return (
-    <div className="">
-      <Home></Home>
+    <div>
+      <div className=" hidden md:block fixed left-0">
+        <SideBar></SideBar>
+      </div>
+      <div className="flex justify-center ">
+        <Home></Home>
+      </div>
       <div className="md:hidden">
         <FooterNav></FooterNav>
-      </div>
-      <div className=" hidden md:block">
-        <SideBar></SideBar>
       </div>
     </div>
   );

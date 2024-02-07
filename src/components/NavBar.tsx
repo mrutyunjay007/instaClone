@@ -4,7 +4,7 @@ import { VscSearch } from "react-icons/vsc";
 
 function NavBar() {
   return (
-    <div className="flex justify-between items-center w-screen h-[9vh] bg-white border-b-2 border-s-slate-100">
+    <div className="flex justify-between items-center w-full h-[9vh] bg-white border-b-2 border-s-slate-100">
       <div className="ml-4">
         <span className=" h-6 w-6 ">
           <img src={instaLogoType} alt="" />
