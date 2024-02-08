@@ -8,7 +8,7 @@ import instaLogoType from "../assets/insta logo.png";
 function SideBar() {
   return (
     // Container
-    <div className="  flex flex-col gap-10 items-center lg:items-start  h-screen w-[72px] lg:w-[244px] lg:ml-3 border-r-2  border-s-slate-100 bg-white ">
+    <div className="  flex flex-col gap-10 items-center lg:items-start  h-screen w-[72px] lg:w-[244px] lg:pl-3 border-r-2  border-s-slate-100 bg-white ">
       {/* insta icon */}
       <div className="mt-5  cursor-pointer">
         <span className="w-6 h-6 lg:hidden">
