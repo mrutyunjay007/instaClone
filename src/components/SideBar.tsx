@@ -1,9 +1,8 @@
-// import React from 'react'
+// import { useState } from "react";
 import instaIcon from "../assets/InstagramIcon.svg";
-import { VscAccount } from "react-icons/vsc";
-import HomeIcon from "../assets/HomeIcon.png";
-import CreateIcon from "../assets/CreateIcon.png";
+
 import instaLogoType from "../assets/insta logo.png";
+import Nav from "./Nav";
 
 function SideBar() {
   return (
@@ -21,36 +20,7 @@ function SideBar() {
 
       {/* nav */}
       <div className="">
-        <ul className=" flex flex-col  gap-5 justify-evenly items-center w-full bg-white">
-          <li className="flex gap-2 justify-center items-center cursor-pointer">
-            <span className="w-6 h-6 ">
-              <img src={HomeIcon} alt="" />
-            </span>
-            <span className=" font-bold text-lg lg:block md:hidden">Home</span>
-          </li>
-          <li
-            className="flex gap-2 justify-center items-center cursor-pointer"
-            id="create"
-          >
-            <span className="w-6 h-6 ">
-              <img src={CreateIcon} alt="" />
-            </span>
-            <span className=" font-bold text-lg lg:block md:hidden">
-              Create
-            </span>
-          </li>
-          <li
-            className="flex gap-2 justify-center items-center cursor-pointer"
-            id="profile"
-          >
-            <span>
-              <VscAccount className="w-6 h-6" />
-            </span>
-            <span className=" font-bold  text-lg lg:block md:hidden">
-              Profile
-            </span>
-          </li>
-        </ul>
+        <Nav></Nav>
       </div>
     </div>
   );
