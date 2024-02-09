@@ -1,4 +1,6 @@
-import { useState } from "react";
+// import { useState } from "react";
+// import {useCustomDispatch} from '../Redux/Store'
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { FaUserCircle } from "react-icons/fa";
@@ -6,11 +8,14 @@ import HomeIcon from "../assets/HomeIcon.png";
 import HomeActIcon from "../assets/HomeActIcon.png";
 import CreateIcon from "../assets/CreateIcon.png";
 import CreateActIcon from "../assets/createActIcon.png";
+import { RootState } from "../Redux/Store";
+import { AtHome, CreatingPost, InProfile } from "../Redux/Slice/NavSlice";
 
 function Nav() {
-  const [isAtHome, setIsAtHome] = useState<boolean>(true);
-  const [isCreatingPost, setIsCreatingPost] = useState<boolean>(false);
-  const [isInProfile, setIsInProfile] = useState<boolean>(false);
+  const { isAtHome, isCreatingPost, isInProfile } = useSelector(
+    (state: RootState) => state.Navigation
+  );
+  const dispatch = useDispatch();
   return (
     <ul className=" flex md:flex-col  md:gap-5 justify-evenly items-center w-full bg-white">
       {/* Home */}
@@ -18,11 +23,7 @@ function Nav() {
         <li
           className="flex gap-2 justify-center items-center cursor-pointer"
           onClick={() => {
-            if (!isAtHome) {
-              setIsAtHome(true);
-              setIsCreatingPost(false);
-              setIsInProfile(false);
-            }
+            !isAtHome && dispatch(AtHome());
           }}
         >
           {!isAtHome ? (
@@ -43,11 +44,7 @@ function Nav() {
         <li
           className="flex gap-2 justify-center items-center cursor-pointer"
           onClick={() => {
-            if (!isCreatingPost) {
-              setIsCreatingPost(true);
-              setIsAtHome(false);
-              setIsInProfile(false);
-            }
+            !isCreatingPost && dispatch(CreatingPost());
           }}
         >
           {!isCreatingPost ? (
@@ -68,11 +65,7 @@ function Nav() {
         <li
           className="flex gap-2 justify-center items-center cursor-pointer"
           onClick={() => {
-            if (!isInProfile) {
-              setIsInProfile(true);
-              setIsAtHome(false);
-              setIsCreatingPost(false);
-            }
+            !isInProfile && dispatch(InProfile());
           }}
         >
           {!isInProfile ? (
