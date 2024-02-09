@@ -8,7 +8,7 @@ import HomeIcon from "../assets/HomeIcon.png";
 import HomeActIcon from "../assets/HomeActIcon.png";
 import CreateIcon from "../assets/CreateIcon.png";
 import CreateActIcon from "../assets/createActIcon.png";
-import { RootState } from "../Redux/Store";
+import { RootState } from "../Redux/store";
 import { AtHome, CreatingPost, InProfile } from "../Redux/Slice/NavSlice";
 
 function Nav() {
