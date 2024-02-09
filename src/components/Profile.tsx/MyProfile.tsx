@@ -1,7 +1,9 @@
 // import React from 'react'
 
+import User from "../User";
+
 function MyProfile() {
-  return <div>MyProfile</div>;
+  return <User></User>;
 }
 
 export default MyProfile;
