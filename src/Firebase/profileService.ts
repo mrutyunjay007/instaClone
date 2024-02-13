@@ -22,6 +22,7 @@ interface AuthID extends ID {
 }
 interface AuthFollowingNum extends AuthID {
   authUserFollowingNum: number;
+  followingStatus: boolean;
 }
 interface IUserDataToFollow {
   userId: string;
@@ -119,22 +120,39 @@ class ProfileService {
     return null;
   }
 
-  async increaseFollowingNum({
+  async updateFollowingCount({
     userId,
     authUserId,
     authUserFollowingNum,
+    followingStatus,
   }: AuthFollowingNum) {
+    console.log("hi");
+
     // Increase Logged-in-user following count
-    const docAuthRef = doc(this.userCollectionRef, "User", authUserId);
-    await updateDoc(docAuthRef, { following: authUserFollowingNum++ });
+    const docAuthRef = doc(this.userCollectionRef, authUserId);
+    followingStatus &&
+      (await updateDoc(docAuthRef, {
+        followingNumber: authUserFollowingNum + 1,
+      }));
+    !followingStatus &&
+      (await updateDoc(docAuthRef, {
+        followingNumber: authUserFollowingNum - 1,
+      }));
 
     //Increase Other-user follower count
     const docUserRef = doc(this.userCollectionRef, userId);
     const docUserSnap = await getDoc(docUserRef);
 
     if (docUserSnap.exists()) {
-      const userFollowingNums = docUserSnap.data().follower;
-      await updateDoc(docAuthRef, { follower: userFollowingNums + 1 });
+      const userFollowingNums = docUserSnap.data().followerNumber;
+      followingStatus &&
+        (await updateDoc(docUserRef, {
+          followerNumber: userFollowingNums + 1,
+        }));
+      !followingStatus &&
+        (await updateDoc(docUserRef, {
+          followerNumber: userFollowingNums - 1,
+        }));
     }
   }
 
