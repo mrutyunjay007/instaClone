@@ -1,8 +1,29 @@
-// import React from 'react'
+import { useEffect, useState } from "react";
 
 import Connection from "./Connection";
+import { RootState } from "../Redux/store";
+import { useSelector } from "react-redux";
+import { profileService } from "../Firebase/profileService";
+import { TConnection } from "../Redux/Slice/FollowSlice";
 
 function Follower() {
+  const { userId } = useSelector((state: RootState) => state.CurrentUserInfo);
+
+  const [followersList, setFollowersList] = useState<TConnection>([]);
+  const [loding, setLoding] = useState(true);
+
+  // GET followers List
+  useEffect(() => {
+    (async () => {
+      const list = await profileService.getFollowerData({ userId });
+
+      if (list) {
+        setFollowersList([...list]);
+        setLoding(false);
+      }
+    })();
+  }, []);
+
   return (
     <div className="w-full ">
       <div className=" w-full h-[9vh] sticky top-0 flex justify-center items-center  border-b-2 border-s-slate-100">
@@ -10,10 +31,16 @@ function Follower() {
       </div>
       <div className=" mt-2 flex justify-center">
         <div className="w-full md:w-3/4  lg:w-1/2">
-          <Connection></Connection>
-          <Connection></Connection>
-          <Connection></Connection>
-          <Connection></Connection>
+          {loding ? (
+            <div>Loding...</div>
+          ) : (
+            followersList.map((data) => (
+              <Connection
+                key={data.userId}
+                followersData={{ ...data }}
+              ></Connection>
+            ))
+          )}
         </div>
       </div>
     </div>
