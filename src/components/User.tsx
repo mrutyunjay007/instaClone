@@ -25,11 +25,7 @@ function User({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(isFollowing);
-    console.log(userData.userId);
-
     (async (userId, authUserId) => {
-      // try {
       const inFollowList = await profileService.isInFollowList({
         userId,
         authUserId,
@@ -39,9 +35,6 @@ function User({
         setIsInFollowList(true);
         inFollowList.following && setIsFollowing(true);
       }
-      // } catch (error) {
-      //   console.log(error);
-      // }
     })(userData.userId, authUser.userId);
   }, []);
 
@@ -52,14 +45,14 @@ function User({
           userId: authUser.userId,
           userName: authUser.userName,
           profilePic: authUser.profilePic,
-          follow: false,
+          follower: false,
           following: !isFollowing,
         },
         userData: {
           userId: userData.userId,
           userName: userData.userName,
           profilePic: userData.profilePic,
-          follow: !isFollowing,
+          follower: !isFollowing,
           following: false,
         },
       });

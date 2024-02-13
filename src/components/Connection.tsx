@@ -41,7 +41,7 @@ function Connection({
         }}
       >
         <span className=" text-white ">
-          {isFollowing ? "Following..." : "Follow"}
+          {isFollowingStatus ? "Following..." : "Follow"}
         </span>
       </div>
     </div>

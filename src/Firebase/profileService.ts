@@ -27,7 +27,7 @@ interface IUserDataToFollow {
   userId: string;
   userName: string;
   profilePic: string;
-  follow: boolean;
+  follower: boolean;
   following: boolean;
 }
 interface IFollowFollowing {
@@ -89,7 +89,7 @@ class ProfileService {
         userData.userId
       );
 
-      await setDoc(docRefAuth, authUserData);
+      await setDoc(docRefAuth, userData);
 
       // // Put Logged-in-user in follower list of Other-user
       const docRefUser = doc(
@@ -98,7 +98,7 @@ class ProfileService {
         "follow",
         authUserData.userId
       );
-      await setDoc(docRefUser, userData);
+      await setDoc(docRefUser, authUserData);
     } catch (error) {
       console.log(error);
     }
