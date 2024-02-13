@@ -7,8 +7,8 @@ import {
 //components imp
 import Layout from "../components/Layout";
 import Home from "../components/Home";
-import MyProfile from "../components/Profile.tsx/MyProfile";
 import UserProfile from "../components/Profile.tsx/UserProfile";
+import OthersProfile from "../components/Profile.tsx/OthersProfile";
 import Follower from "../components/Follower";
 import Following from "../components/Following";
 import Create from "../components/CreateNewPost/Create";
@@ -19,8 +19,8 @@ export const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="createPost" element={<Create />} />
-      <Route path="myProfile" element={<MyProfile />} />
       <Route path="userProfile" element={<UserProfile />} />
+      <Route path="othersProfile" element={<OthersProfile />} />
       <Route path="followers" element={<Follower />} />
       <Route path="following" element={<Following />} />
     </Route>

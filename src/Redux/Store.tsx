@@ -3,11 +3,15 @@ import { configureStore } from "@reduxjs/toolkit";
 // import type { TypedUseSelectorHook } from "react-redux";
 import NavSlice from "./Slice/NavSlice";
 import UserSlice from "./Slice/UserSlice";
+import OthersSlice from "./Slice/OthersSlice";
+import CurrentUserSlice from "./Slice/CurrentUserSlice";
 
 const store = configureStore({
   reducer: {
     UserInfos: UserSlice,
     Navigation: NavSlice,
+    OthersInfo: OthersSlice,
+    CurrentUserInfo: CurrentUserSlice,
   },
 });
 

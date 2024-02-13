@@ -61,7 +61,7 @@ function Nav() {
       </Link>
 
       {/* profile */}
-      <Link to="/myProfile">
+      <Link to="/userProfile">
         <li
           className="flex gap-2 justify-center items-center cursor-pointer"
           onClick={() => {
