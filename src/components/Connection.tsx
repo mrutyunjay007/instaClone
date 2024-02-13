@@ -1,10 +1,11 @@
 // import React from 'react'
 import { VscAccount } from "react-icons/vsc";
 import { IConnection } from "../Redux/Slice/FollowSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
 import { useState } from "react";
 import { profileService } from "../Firebase/profileService";
+import { upDateUserFollowingCount } from "../Redux/Slice/UserSlice";
 
 function Connection({
   followersData: { userId, userName, profilePic, isFollower, isFollowing },
@@ -14,6 +15,11 @@ function Connection({
   const authUserId = useSelector(
     (state: RootState) => state.UserInfos.userData.userId
   );
+  const authUserFollowingNum = useSelector(
+    (state: RootState) => state.UserInfos.userData.following
+  );
+
+  const dispatch = useDispatch();
 
   const [isFollowingStatus, setIsFollowingStatus] = useState(isFollowing);
 
@@ -30,17 +36,34 @@ function Connection({
       </div>
 
       <div
-        className=" flex justify-center items-center basis-1/4  bg-[#0095f6]  rounded-md p-2 text-lg font-bold cursor-pointer"
+        className={` flex justify-center items-center basis-1/4 ${
+          !isFollowingStatus
+            ? " bg-[#0095f6]"
+            : "bg-white border-2  border-s-slate-100"
+        }  rounded-md p-2 text-lg font-bold cursor-pointer`}
         onClick={() => {
           profileService.upDateFollowingFromFollowList({
             userId,
             authUserId,
             followingStatus: !isFollowingStatus,
           });
+          profileService.updateFollowingCount({
+            userId,
+            authUserId,
+            authUserFollowingNum,
+            followingStatus: !isFollowingStatus,
+          });
+          dispatch(
+            upDateUserFollowingCount({ followingStatus: !isFollowingStatus })
+          );
           setIsFollowingStatus(!isFollowingStatus);
         }}
       >
-        <span className=" text-white ">
+        <span
+          className={`${
+            !isFollowingStatus ? "text-white" : "text-slate-400"
+          }  `}
+        >
           {isFollowingStatus ? "Following..." : "Follow"}
         </span>
       </div>

@@ -1,7 +1,7 @@
 // import React from 'react'
 import { VscAccount } from "react-icons/vsc";
 import Gallary from "./Gallary";
-import { IUser } from "../Redux/Slice/UserSlice";
+import { IUser, upDateUserFollowingCount } from "../Redux/Slice/UserSlice";
 import { Link } from "react-router-dom";
 // import { RootState } from "../Redux/store";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import { setCurrentUser } from "../Redux/Slice/CurrentUserSlice";
 import { profileService } from "../Firebase/profileService";
 import { RootState } from "../Redux/store";
 import { useEffect, useState } from "react";
+import { upDateOthersFollowingCount } from "../Redux/Slice/OthersSlice";
 
 function User({
   userData,
@@ -63,8 +64,15 @@ function User({
         authUserId: authUser.userId,
         followingStatus: !isFollowing,
       });
-      console.log("hi");
     }
+    profileService.updateFollowingCount({
+      userId: userData.userId,
+      authUserId: authUser.userId,
+      authUserFollowingNum: authUser.following,
+      followingStatus: !isFollowing,
+    });
+    dispatch(upDateUserFollowingCount({ followingStatus: !isFollowing }));
+    dispatch(upDateOthersFollowingCount({ followerStatus: !isFollowing }));
     setIsFollowing(!isFollowing);
   };
 

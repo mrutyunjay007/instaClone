@@ -35,25 +35,30 @@ class AuthService {
     try {
       await signInWithPopup(this.auth, this.googleProvider);
 
-      onAuthStateChanged(this.auth, (user) => {
-        if (user) {
-          const userName = user.displayName;
-          const profilePic = user.photoURL;
-          const userId = user.uid;
+      onAuthStateChanged(this.auth, async (user) => {
+        try {
+          if (user) {
+            const userName = user.displayName;
+            const profilePic = user.photoURL;
+            const userId = user.uid;
 
-          // this.ID = user.uid;
-          // console.log(this.ID);
+            const docRef = doc(this.collectionRef, userId);
+            const docSnap = await getDoc(docRef);
+            if (!docSnap.exists()) {
+              const createNewUser = {
+                userName,
+                userId,
+                profilePic,
+                userBio: "",
+                followerNumber: 0,
+                followingNumber: 0,
+              };
 
-          const createNewUser = {
-            userName,
-            userId,
-            profilePic,
-            userBio: "",
-            followerNumber: 0,
-            followingNumber: 0,
-          };
-
-          setDoc(doc(this.collectionRef, userId), createNewUser);
+              setDoc(doc(this.collectionRef, userId), createNewUser);
+            }
+          }
+        } catch (error) {
+          console.log(error);
         }
       });
     } catch (error) {
@@ -71,6 +76,10 @@ class AuthService {
         const docSnap = await getDoc(docRef);
 
         if (docSnap.exists()) {
+          console.log(docSnap.data().followerNumber);
+
+          console.log(docSnap.data().followingNumber);
+
           return {
             userName: docSnap.data().userName,
             userId: docSnap.data().userId,

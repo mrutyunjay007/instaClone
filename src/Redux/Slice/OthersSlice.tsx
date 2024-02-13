@@ -24,30 +24,27 @@ const initialState = {
   },
 };
 
-const userSlice = createSlice({
-  name: "userInfos",
+const othersSlice = createSlice({
+  name: "othersInfos",
   initialState,
   reducers: {
-    logIn(state, actions: PayloadAction<IUser>) {
+    addOthersinfo(state, actions: PayloadAction<IUser>) {
       state.status = true;
       state.userData = actions.payload;
     },
-    logOut(state) {
-      state.status = false;
-      state.userData = emptyUserData;
-    },
-    upDateUserFollowingCount(
+    upDateOthersFollowingCount(
       state,
-      actions: PayloadAction<{ followingStatus: boolean }>
+      actions: PayloadAction<{ followerStatus: boolean }>
     ) {
-      if (actions.payload.followingStatus) {
-        state.userData.following += 1;
+      if (actions.payload.followerStatus) {
+        state.userData.follower += 1;
       } else {
-        state.userData.following -= 1;
+        state.userData.follower -= 1;
       }
     },
   },
 });
 
-export default userSlice.reducer;
-export const { logIn, logOut, upDateUserFollowingCount } = userSlice.actions;
+export default othersSlice.reducer;
+export const { addOthersinfo, upDateOthersFollowingCount } =
+  othersSlice.actions;
