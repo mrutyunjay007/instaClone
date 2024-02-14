@@ -12,7 +12,7 @@ export interface IPost {
 }
 
 // Type of post list
-// export type TPostList = IPost[];
+export type TPostList = IPost[];
 
 // const initialState: TPostList = [];
 

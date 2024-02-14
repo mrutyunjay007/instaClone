@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 
 import TopBar from "./TopBar";
 import Post from "./Post";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 
 import { postService } from "../Firebase/postService";
-import { TPostList, setPostList } from "../Redux/Slice/PostSlice";
-import { RootState } from "../Redux/store";
+import { TPostList } from "../Redux/Slice/PostSlice";
+// import { RootState } from "../Redux/store";
 
 function Home() {
   // const allPost = useSelector((state: RootState) => state.PostList);

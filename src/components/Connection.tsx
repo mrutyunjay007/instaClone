@@ -6,6 +6,8 @@ import { RootState } from "../Redux/store";
 import { useState } from "react";
 import { profileService } from "../Firebase/profileService";
 import { upDateUserFollowingCount } from "../Redux/Slice/UserSlice";
+import { addOthersinfo } from "../Redux/Slice/OthersSlice";
+import { Link } from "react-router-dom";
 
 function Connection({
   followersData: { userId, userName, profilePic, isFollower, isFollowing },
@@ -25,15 +27,31 @@ function Connection({
 
   return (
     <div className="flex justify-between items-center px-4">
-      <div className="flex-1 flex justify-start items-center gap-3 my-4 cursor-pointer">
-        <div className="">
-          <VscAccount className="w-8 h-8"></VscAccount>{" "}
-        </div>
+      <Link to="/othersProfile">
+        <div
+          className="flex-1 flex justify-start items-center gap-3 my-4 cursor-pointer"
+          onClick={async () => {
+            try {
+              const otherUserInfo = await profileService.otherUserProfile({
+                userId,
+              });
+              if (otherUserInfo) {
+                dispatch(addOthersinfo({ ...otherUserInfo }));
+              }
+            } catch (error) {
+              console.log(error);
+            }
+          }}
+        >
+          <div className="">
+            <VscAccount className="w-8 h-8"></VscAccount>{" "}
+          </div>
 
-        <div className=" text-lg font-bold">
-          <span>{userName}</span>
+          <div className=" text-lg font-bold">
+            <span>{userName}</span>
+          </div>
         </div>
-      </div>
+      </Link>
 
       <div
         className={` flex justify-center items-center basis-1/4 ${
