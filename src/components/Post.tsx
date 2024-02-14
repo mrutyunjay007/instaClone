@@ -1,7 +1,7 @@
 // import React from 'react'
 import { VscAccount } from "react-icons/vsc";
 import Engagments from "./Engagments";
-import post from "../assets/js-mock-up.png.png";
+// import post from "../assets/js-mock-up.png.png";
 import { IPost } from "../Redux/Slice/PostSlice";
 
 function Post({
@@ -9,6 +9,8 @@ function Post({
 }: {
   posts: IPost;
 }) {
+  console.log(postUrl);
+
   return (
     <div className=" flex flex-col  gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
       {/* User Info */}
@@ -16,7 +18,7 @@ function Post({
         <span className="ml-2">
           <VscAccount className="w-8 h-8" />
         </span>
-        <span className=" font-bold">Name</span>
+        <span className=" font-bold">{userName}</span>
       </div>
       {/* Posted Image */}
       <div className="w-full">

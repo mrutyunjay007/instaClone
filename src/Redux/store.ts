@@ -5,7 +5,7 @@ import NavSlice from "./Slice/NavSlice";
 import UserSlice from "./Slice/UserSlice";
 import OthersSlice from "./Slice/OthersSlice";
 import CurrentUserSlice from "./Slice/CurrentUserSlice";
-import PostSlice from "./Slice/PostSlice";
+// import PostSlice from "./Slice/PostSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,7 +13,7 @@ const store = configureStore({
     Navigation: NavSlice,
     OthersInfo: OthersSlice,
     CurrentUserInfo: CurrentUserSlice,
-    PostList: PostSlice,
+    // PostList: PostSlice,
   },
 });
 

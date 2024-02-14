@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+// import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 // Single-post Interface
 export interface IPost {
@@ -12,19 +12,19 @@ export interface IPost {
 }
 
 // Type of post list
-export type TPostList = IPost[];
+// export type TPostList = IPost[];
 
-const initialState: TPostList = [];
+// const initialState: TPostList = [];
 
-const postSlice = createSlice({
-  name: "postList",
-  initialState,
-  reducers: {
-    setPostList(state, actions: PayloadAction<TPostList>) {
-      state = actions.payload;
-    },
-  },
-});
+// const postSlice = createSlice({
+//   name: "postList",
+//   initialState,
+//   reducers: {
+//     setPostList(state, actions: PayloadAction<TPostList>) {
+//       state = actions.payload;
+//     },
+//   },
+// });
 
-export default postSlice.reducer;
-export const { setPostList } = postSlice.actions;
+// export default postSlice.reducer;
+// export const { setPostList } = postSlice.actions;

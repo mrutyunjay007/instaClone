@@ -5,21 +5,31 @@ import Post from "./Post";
 import { useDispatch, useSelector } from "react-redux";
 
 import { postService } from "../Firebase/postService";
-import { setPostList } from "../Redux/Slice/PostSlice";
+import { TPostList, setPostList } from "../Redux/Slice/PostSlice";
 import { RootState } from "../Redux/store";
 
 function Home() {
-  const allPost = useSelector((state: RootState) => state.PostList);
-  const dispatch = useDispatch();
+  // const allPost = useSelector((state: RootState) => state.PostList);
+  // const dispatch = useDispatch();
+
+  const [postList, setPostList] = useState<TPostList>([]);
+
   const [isLoding, setIsLoding] = useState(true);
 
   useEffect(() => {
     (async () => {
-      const postList = await postService.getAllPosts();
-      if (postList) {
-        dispatch(setPostList(postList));
+      try {
+        const postList = await postService.getAllPosts();
+        console.log(postList);
+
+        if (postList) {
+          // dispatch(setPostList([...postList]));
+          setPostList([...postList]);
+          setIsLoding(false);
+        }
+      } catch (error) {
+        console.log(error);
       }
-      setIsLoding(false);
     })();
   }, []);
 
@@ -34,7 +44,7 @@ function Home() {
             {isLoding ? (
               <div>Loading...</div>
             ) : (
-              allPost.map((post) => (
+              postList.map((post) => (
                 <Post key={post.postId} posts={{ ...post }}></Post>
               ))
             )}

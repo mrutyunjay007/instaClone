@@ -7,8 +7,8 @@ import {
 //components imp
 import Layout from "../components/Layout";
 import Home from "../components/Home";
-import UserProfile from "../components/Profile.tsx/UserProfile";
-import OthersProfile from "../components/Profile.tsx/OthersProfile";
+import UserProfile from "../components/Profile/UserProfile";
+import OthersProfile from "../components/Profile/OthersProfile";
 import Follower from "../components/Follower";
 import Following from "../components/Following";
 import Create from "../components/CreateNewPost/Create";
