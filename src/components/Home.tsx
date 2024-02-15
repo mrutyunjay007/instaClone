@@ -5,13 +5,9 @@ import Post from "./Post";
 // import { useDispatch, useSelector } from "react-redux";
 
 import { postService } from "../Firebase/postService";
-import { TPostList } from "../Redux/Slice/PostSlice";
-// import { RootState } from "../Redux/store";
+import { TPostList } from "../Redux/Slice/CurrentPostSlice";
 
 function Home() {
-  // const allPost = useSelector((state: RootState) => state.PostList);
-  // const dispatch = useDispatch();
-
   const [postList, setPostList] = useState<TPostList>([]);
 
   const [isLoding, setIsLoding] = useState(true);

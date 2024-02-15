@@ -5,7 +5,7 @@ import NavSlice from "./Slice/NavSlice";
 import UserSlice from "./Slice/UserSlice";
 import OthersSlice from "./Slice/OthersSlice";
 import CurrentUserSlice from "./Slice/CurrentUserSlice";
-// import PostSlice from "./Slice/PostSlice";
+import CurrentPostSlice from "./Slice/CurrentPostSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,7 +13,7 @@ const store = configureStore({
     Navigation: NavSlice,
     OthersInfo: OthersSlice,
     CurrentUserInfo: CurrentUserSlice,
-    // PostList: PostSlice,
+    CurrentPostInfo: CurrentPostSlice,
   },
 });
 
@@ -21,7 +21,3 @@ export default store;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
-// Use throughout your app instead of plain `useDispatch` and `useSelector`
-// export const useCustomDispatch: () => AppDispatch = useDispatch;
-// export const useCustomSelector: TypedUseSelectorHook<RootState> = useSelector;

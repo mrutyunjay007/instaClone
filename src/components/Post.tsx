@@ -2,7 +2,7 @@
 import { VscAccount } from "react-icons/vsc";
 import Engagments from "./Engagments";
 // import post from "../assets/js-mock-up.png.png";
-import { IPost } from "../Redux/Slice/PostSlice";
+import { IPost } from "../Redux/Slice/CurrentPostSlice";
 import { profileService } from "../Firebase/profileService";
 import { useDispatch } from "react-redux";
 import { addOthersinfo } from "../Redux/Slice/OthersSlice";
@@ -47,7 +47,17 @@ function Post({
       </div>
       {/* Responses */}
       <div className="w-full">
-        <Engagments></Engagments>
+        <Engagments
+          postInfo={{
+            userId,
+            userName,
+            profilePic,
+            postId,
+            postUrl,
+            likeCount,
+            caption,
+          }}
+        ></Engagments>
       </div>
     </div>
   );

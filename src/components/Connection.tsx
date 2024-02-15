@@ -10,9 +10,11 @@ import { addOthersinfo } from "../Redux/Slice/OthersSlice";
 import { Link } from "react-router-dom";
 
 function Connection({
-  followersData: { userId, userName, profilePic, isFollower, isFollowing },
+  followersData: { userId, userName, profilePic, isFollowing },
+  likeCount,
 }: {
   followersData: IConnection;
+  likeCount: number | null;
 }) {
   const authUserId = useSelector(
     (state: RootState) => state.UserInfos.userData.userId
@@ -53,8 +55,11 @@ function Connection({
         </div>
       </Link>
 
+      {/* follow un-follow btn */}
       <div
         className={` flex justify-center items-center basis-1/4 ${
+          likeCount ? "hidden" : "block"
+        } ${
           !isFollowingStatus
             ? " bg-[#0095f6]"
             : "bg-white border-2  border-s-slate-100"

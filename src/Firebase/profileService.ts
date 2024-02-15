@@ -126,8 +126,6 @@ class ProfileService {
     authUserFollowingNum,
     followingStatus,
   }: AuthFollowingNum) {
-    console.log("hi");
-
     // Increase Logged-in-user following count
     const docAuthRef = doc(this.userCollectionRef, authUserId);
     followingStatus &&

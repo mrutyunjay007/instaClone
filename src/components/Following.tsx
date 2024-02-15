@@ -38,6 +38,7 @@ function Following() {
               <Connection
                 key={data.userId}
                 followersData={{ ...data }}
+                likeCount={null}
               ></Connection>
             ))
           )}
