@@ -118,6 +118,11 @@ function Engagments({
         <div className=" font-bold">{userName}</div>
         <div>{caption}</div>
       </div>
+
+      {/* comment */}
+      <Link to="/comment">
+        <span className="mt-2 cursor-pointer">{"view all replies"}</span>
+      </Link>
     </div>
   );
 }
