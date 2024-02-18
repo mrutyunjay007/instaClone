@@ -6,7 +6,11 @@ import SaveIcon from "../assets/Save.png";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/store";
 import { postService } from "../Firebase/postService";
-import { IPost, addCurrentPost } from "../Redux/Slice/CurrentPostSlice";
+import {
+  IPost,
+  addCurrentPost,
+  upDatePostId,
+} from "../Redux/Slice/CurrentPostSlice";
 import { Link } from "react-router-dom";
 
 function Engagments({
@@ -121,7 +125,14 @@ function Engagments({
 
       {/* comment */}
       <Link to="/comment">
-        <span className="mt-2 cursor-pointer">{"view all replies"}</span>
+        <span
+          className="mt-2 cursor-pointer"
+          onClick={() => {
+            dispatch(upDatePostId({ postId }));
+          }}
+        >
+          {"view all replies"}
+        </span>
       </Link>
     </div>
   );

@@ -1,47 +1,76 @@
 import { VscAccount } from "react-icons/vsc";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
 import { useEffect, useState } from "react";
+import { doneOrCancel, repling } from "../../Redux/Slice/CommentSlice";
+import { commentService } from "../../Firebase/commentService";
 
 export interface IComment {
   userId: string;
   userName: string;
   profilePic: string;
   content: string;
+  commentId: string;
   //   item: IComment[];
 }
 
 export type TComment = IComment[];
 
 function Comment({
-  comment: { userId, userName, profilePic, content },
+  comment: { userId, userName, profilePic, content, commentId },
   refArray,
 }: {
   comment: IComment;
   refArray: string[];
 }) {
-  const authUser = useSelector((state: RootState) => state.UserInfos.userData);
+  const reply = useSelector((state: RootState) => state.CommentInfo);
+  const authUser = useSelector((state: RootState) => state.UserInfos);
 
   const [commentItems, setCommentitems] = useState<TComment>([]);
 
   const [showReplies, setShowReplies] = useState(false);
+  // const [isReplied, setReplied] = useState(reply.replied);
 
-  const [newComment, setNewComment] = useState<IComment>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // TODO:
+    // TODO: Retrive replies from db
     if (showReplies) {
-      //retrive replies from db
     }
   }, [showReplies]);
 
-  // TODO: add new comment in local & db
+  // Add new comment in local & db
   useEffect(() => {
-    if (newComment) {
-      setCommentitems((pre) => [...pre, newComment]);
-      // setNewComment(null)
-    }
-  }, [newComment]);
+    console.log(reply.replied);
+    (async () => {
+      try {
+        if (reply.replied && reply.commentid == commentId) {
+          // Add new comment db
+          const commentId = await commentService.createNewComment({
+            userData: {
+              userId: authUser.userData.userId,
+              userName: authUser.userData.userName,
+              profilePic: authUser.userData.profilePic,
+            },
+            content,
+            refArray,
+          });
+          // Add new comment in local
+          if (commentId) {
+            const newComment = {
+              userId,
+              userName,
+              profilePic,
+              commentId,
+              content: reply.content,
+            };
+            setCommentitems((pre) => [...pre, newComment]);
+            dispatch(doneOrCancel());
+          }
+        }
+      } catch (error) {}
+    })();
+  }, [reply.replied]);
 
   return (
     <div className="main-container">
@@ -57,26 +86,43 @@ function Comment({
           {/* content */}
           <span className=" ml-4">{content}</span>
         </div>
-        <span className={`${showReplies ? "block" : "hidden"}`}>
-          {" "}
-          "↰ Reply"
-        </span>
-      </div>
 
-      {/* Reply */}
-      <div>
-        <span className={`${showReplies ? "hidden" : "block"}`}>
-          {"view all replies"}
-        </span>
+        {/* Reply */}
+        <div className=" flex gap-3">
+          {/* Reply btn */}
+          <span
+            className="font-bold cursor-pointer"
+            onClick={() => {
+              dispatch(repling({ userId, userName, commentId, repling: true }));
+            }}
+          >
+            {"↰ Reply"}
+          </span>
+          {/* show reply */}
+          <span
+            className={`${showReplies ? "hidden" : "block"}`}
+            onClick={() => {
+              setShowReplies(true);
+            }}
+          >
+            {"view all replies"}
+          </span>
+        </div>
+
         <div
           className={`${showReplies ? "block" : "hidden"} flex flex-col pl-5`}
         >
-          {commentItems?.map((com) => (
-            <Comment
-              comment={com}
-              refArray={[...refArray, "comment", com.userId]}
-            ></Comment>
-          ))}
+          {commentItems.length > 0 ? (
+            commentItems.map((com) => (
+              <Comment
+                key={com.commentId}
+                comment={com}
+                refArray={[...refArray, "comment"]}
+              ></Comment>
+            ))
+          ) : (
+            <div>{}</div>
+          )}
         </div>
       </div>
     </div>

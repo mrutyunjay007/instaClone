@@ -6,6 +6,7 @@ import UserSlice from "./Slice/UserSlice";
 import OthersSlice from "./Slice/OthersSlice";
 import CurrentUserSlice from "./Slice/CurrentUserSlice";
 import CurrentPostSlice from "./Slice/CurrentPostSlice";
+import CommentSlice from "./Slice/CommentSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     OthersInfo: OthersSlice,
     CurrentUserInfo: CurrentUserSlice,
     CurrentPostInfo: CurrentPostSlice,
+    CommentInfo: CommentSlice,
   },
 });
 

@@ -37,8 +37,11 @@ const currentPostSlice = createSlice({
       state.postUrl = actions.payload.postUrl;
       state.caption = actions.payload.caption;
     },
+    upDatePostId(state, actions: PayloadAction<{ postId: string }>) {
+      state.postId = actions.payload.postId;
+    },
   },
 });
 
 export default currentPostSlice.reducer;
-export const { addCurrentPost } = currentPostSlice.actions;
+export const { addCurrentPost, upDatePostId } = currentPostSlice.actions;
