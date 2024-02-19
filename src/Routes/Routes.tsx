@@ -14,7 +14,7 @@ import Following from "../components/Following";
 import Create from "../components/CreateNewPost/Create";
 import Likes from "../components/Likes";
 import Comments from "../components/Comment/Comments";
-// import Share from "../components/CreateNewPost/Share";
+import Share from "../components/CreateNewPost/Share";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,7 +22,8 @@ export const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="likes" element={<Likes />} />
       <Route path="comment" element={<Comments />} />
-      <Route path="createPost" element={<Create />} />
+      <Route path="upLoadPost" element={<Create />} />
+      <Route path="sharePost" element={<Share />} />
       <Route path="userProfile" element={<UserProfile />} />
       <Route path="othersProfile" element={<OthersProfile />} />
       <Route path="followers" element={<Follower />} />

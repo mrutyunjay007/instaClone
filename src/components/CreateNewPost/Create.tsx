@@ -1,7 +1,14 @@
 // import React from 'react'
+import { useRef } from "react";
+import { setSelectedPost } from "../../Redux/Slice/CreatePostSlice";
 import uploadIcon from "../../assets/Icon to represent media such as images or videos.png";
-
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 function Create() {
+  const inputref = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   return (
     <div className="w-full">
       {/* nav */}
@@ -15,7 +22,26 @@ function Create() {
           <span>
             <img src={uploadIcon} alt="" />
           </span>
-          <span className="mt-2  bg-[#0095f6] text-white font-semibold p-3 rounded-lg cursor-pointer ">
+          <span
+            className="mt-2  bg-[#0095f6] text-white font-semibold p-3 rounded-lg cursor-pointer "
+            onClick={() => {
+              inputref.current?.click();
+            }}
+          >
+            <input
+              type="file"
+              ref={inputref}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                const post = e.target.files;
+                if (post != null) {
+                  const postUrl = URL.createObjectURL(post[0]);
+                  const postMetaData = post[0];
+                  dispatch(setSelectedPost({ postUrl, postMetaData }));
+                  navigate("/sharePost");
+                }
+              }}
+              className="hidden"
+            />
             select from device
           </span>
         </div>

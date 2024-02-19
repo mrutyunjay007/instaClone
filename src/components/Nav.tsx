@@ -40,7 +40,7 @@ function Nav() {
       </Link>
 
       {/* crete new post */}
-      <Link to="/createPost">
+      <Link to="/upLoadPost">
         <li
           className="flex gap-2 justify-center items-center cursor-pointer"
           onClick={() => {

@@ -1,6 +1,7 @@
 import {
   CollectionReference,
   Firestore,
+  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -11,18 +12,23 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 // import { Todo } from "../utility/TodoType";
 import { app } from "./config";
+import { Todo } from "../utility/TodoType";
 
 class PostService {
   db: Firestore;
   postCollectionRef: CollectionReference;
+  storage: Todo;
 
   constructor() {
     this.db = getFirestore(app);
     this.postCollectionRef = collection(this.db, "Posts");
+    this.storage = getStorage();
   }
 
+  // ...........Get-Post.................
   async getAllPosts() {
     try {
       const dataRef = await getDocs(this.postCollectionRef);
@@ -45,6 +51,93 @@ class PostService {
     }
   }
 
+  // ...........Create-Post.................
+  async createNewPost({
+    postMetaData,
+    userName,
+    userId,
+    profilePic,
+    caption,
+  }: {
+    postMetaData: File;
+    userName: string;
+    userId: string;
+    profilePic: string;
+    caption: string;
+  }) {
+    try {
+      if (postMetaData != null) {
+        // get url
+        const url = await this.putNewPostInFirebaseStorage({
+          postMetaData,
+          userName,
+          userId,
+        });
+
+        const postData = {
+          userId,
+          userName,
+          profilePicture: profilePic,
+          postUrl: url,
+          caption,
+          likeCount: 0,
+        };
+
+        // add in Post collection and get id as return
+        const postInfo = await addDoc(this.postCollectionRef, postData);
+
+        // add post-id & post-url to User's post-subCollection to show in user profile gallary
+        const postSubcollectionRef = collection(
+          this.db,
+          "User",
+          userId,
+          "post"
+        );
+
+        await setDoc(doc(postSubcollectionRef, postInfo.id), {
+          postId: postInfo.id,
+          postUrl: url,
+        });
+
+        return {
+          postId: postInfo.id,
+          userId,
+          userName,
+          profilePic,
+          postUrl: url,
+          caption,
+          likeCount: 0,
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private async putNewPostInFirebaseStorage({
+    postMetaData,
+    userName,
+    userId,
+  }: {
+    postMetaData: File;
+    userName: string;
+    userId: string;
+  }) {
+    try {
+      const postRef = ref(
+        this.storage,
+        `${userName}-${userId}-posts/${postMetaData.name}`
+      );
+      const uploaded = await uploadBytes(postRef, postMetaData);
+      const url = await getDownloadURL(uploaded.ref);
+
+      return url;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // ...........Like-Section.................
   async isAuthUserLiked({
     postId,
     authUserId,

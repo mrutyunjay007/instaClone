@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 import TopBar from "./TopBar";
 import Post from "./Post";
 // import { useDispatch, useSelector } from "react-redux";
 
 import { postService } from "../Firebase/postService";
 import { TPostList } from "../Redux/Slice/CurrentPostSlice";
+import { RootState } from "../Redux/store";
+import { newPostUpLoadingDone } from "../Redux/Slice/CreatePostSlice";
+import { AtHome } from "../Redux/Slice/NavSlice";
 
 function Home() {
+  const newPost = useSelector(
+    (state: RootState) => state.CreatePostInfo.uploadedPost
+  );
+
+  const dispatch = useDispatch();
   const [postList, setPostList] = useState<TPostList>([]);
 
   const [isLoding, setIsLoding] = useState(true);
 
+  // Retrive all Post
   useEffect(() => {
     (async () => {
       try {
@@ -28,6 +37,25 @@ function Home() {
       }
     })();
   }, []);
+
+  // Add new Post
+  useEffect(() => {
+    if (newPost.postId.length > 0) {
+      const post = {
+        postId: newPost.postId,
+        userId: newPost.userId,
+        userName: newPost.userName,
+        profilePic: newPost.profilePic,
+        postUrl: newPost.postUrl as string,
+        caption: newPost.caption,
+        likeCount: newPost.likeCount,
+      };
+
+      setPostList((pre) => [...pre, post]);
+      dispatch(newPostUpLoadingDone());
+      dispatch(AtHome());
+    }
+  }, [newPost]);
 
   return (
     <>
