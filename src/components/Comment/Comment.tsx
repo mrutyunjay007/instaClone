@@ -2,7 +2,11 @@ import { VscAccount } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
 import { useEffect, useState } from "react";
-import { doneOrCancel, repling } from "../../Redux/Slice/CommentSlice";
+import {
+  doneOrCancel,
+  repling,
+  setLoading,
+} from "../../Redux/Slice/CommentSlice";
 import { commentService } from "../../Firebase/commentService";
 
 export interface IComment {
@@ -11,7 +15,6 @@ export interface IComment {
   profilePic: string;
   content: string;
   commentId: string;
-  //   item: IComment[];
 }
 
 export type TComment = IComment[];
@@ -26,33 +29,51 @@ function Comment({
   const reply = useSelector((state: RootState) => state.CommentInfo);
   const authUser = useSelector((state: RootState) => state.UserInfos);
 
+  const dispatch = useDispatch();
+
   const [commentItems, setCommentitems] = useState<TComment>([]);
 
   const [showReplies, setShowReplies] = useState(false);
-  // const [isReplied, setReplied] = useState(reply.replied);
 
-  const dispatch = useDispatch();
+  const [replyCallCount, setReplyCallCount] = useState(0);
 
+  // Show All replies
   useEffect(() => {
-    // TODO: Retrive replies from db
+    // Retrive replies from db
     if (showReplies) {
+      if (replyCallCount == 0) {
+        (async () => {
+          console.log("yes");
+
+          dispatch(setLoading({ loading: true }));
+          const comentList = await commentService.getComments({
+            refArray: [...refArray],
+          });
+          if (comentList) {
+            setCommentitems([...comentList]);
+          }
+          dispatch(setLoading({ loading: false }));
+        })();
+        setReplyCallCount(replyCallCount + 1);
+      }
     }
   }, [showReplies]);
 
   // Add new comment in local & db
   useEffect(() => {
-    console.log(reply.replied);
-    (async () => {
-      try {
-        if (reply.replied && reply.commentid == commentId) {
+    if (reply.replied && reply.commentId === commentId) {
+      (async () => {
+        try {
           // Add new comment db
+
+          dispatch(setLoading({ loading: true }));
           const commentId = await commentService.createNewComment({
             userData: {
               userId: authUser.userData.userId,
               userName: authUser.userData.userName,
               profilePic: authUser.userData.profilePic,
             },
-            content,
+            content: reply.content,
             refArray,
           });
           // Add new comment in local
@@ -66,10 +87,14 @@ function Comment({
             };
             setCommentitems((pre) => [...pre, newComment]);
             dispatch(doneOrCancel());
+            dispatch(setLoading({ loading: false }));
+            setShowReplies(true);
           }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {}
-    })();
+      })();
+    }
   }, [reply.replied]);
 
   return (
@@ -100,12 +125,12 @@ function Comment({
           </span>
           {/* show reply */}
           <span
-            className={`${showReplies ? "hidden" : "block"}`}
+            className={``}
             onClick={() => {
-              setShowReplies(true);
+              setShowReplies(!showReplies);
             }}
           >
-            {"view all replies"}
+            {!showReplies ? "view all replies" : "close"}
           </span>
         </div>
 
@@ -117,7 +142,7 @@ function Comment({
               <Comment
                 key={com.commentId}
                 comment={com}
-                refArray={[...refArray, "comment"]}
+                refArray={[...refArray, com.commentId, "comment"]}
               ></Comment>
             ))
           ) : (

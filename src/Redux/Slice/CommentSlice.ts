@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 interface IRepling {
   userId: string;
   userName: string;
-  commentId: string | undefined;
+  commentId: string;
   repling: boolean;
 }
 
@@ -18,9 +18,10 @@ const initialState = {
   userName: "",
   authUserId: "",
   content: "",
-  commentid: "",
+  commentId: "",
   repling: false,
   replied: false,
+  loading: false,
 };
 
 const commentSlice = createSlice({
@@ -31,6 +32,7 @@ const commentSlice = createSlice({
     repling(state, actions: PayloadAction<IRepling>) {
       state.userId = actions.payload.userId;
       state.userName = actions.payload.userName;
+      state.commentId = actions.payload.commentId;
       state.repling = actions.payload.repling;
     },
 
@@ -46,8 +48,12 @@ const commentSlice = createSlice({
       state.repling = false;
       state.replied = false;
     },
+    setLoading(state, actions: PayloadAction<{ loading: boolean }>) {
+      state.loading = actions.payload.loading;
+    },
   },
 });
 
 export default commentSlice.reducer;
-export const { repling, replied, doneOrCancel } = commentSlice.actions;
+export const { repling, replied, doneOrCancel, setLoading } =
+  commentSlice.actions;

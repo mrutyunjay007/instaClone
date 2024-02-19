@@ -1,5 +1,5 @@
 import {
-  CollectionReference,
+  // CollectionReference,
   DocumentData,
   Firestore,
   addDoc,
@@ -9,26 +9,21 @@ import {
   getFirestore,
   updateDoc,
 } from "firebase/firestore";
-// import { Todo } from "../utility/TodoType";
+
 import { app } from "./config";
-// import { Tuple } from "@reduxjs/toolkit";
 
 class CommentService {
-  db: Firestore;
-  commentCollectionRef: CollectionReference;
+  private db: Firestore;
+  //  private  commentCollectionRef: CollectionReference;
 
   constructor() {
     this.db = getFirestore(app);
-    this.commentCollectionRef = collection(this.db, "Posts");
+    // this.commentCollectionRef = collection(this.db, "Posts");
   }
 
   async getComments({ refArray }: { refArray: string[] }) {
     try {
-      let collectionRef = this.commentCollectionRef;
-
-      for (const str of refArray) {
-        collectionRef = collection(collectionRef, str);
-      }
+      const collectionRef = collection(this.db, "Posts", ...refArray);
 
       const dataRef = await getDocs(collectionRef);
       const commentList = dataRef.docs.map((doc) => {
@@ -57,7 +52,6 @@ class CommentService {
     content: string;
     refArray: string[];
   }) {
-    console.log(refArray);
     try {
       const collectionRef = collection(this.db, "Posts", ...refArray);
 
@@ -70,7 +64,6 @@ class CommentService {
       };
 
       const commentRef = await addDoc(collectionRef, newComment);
-      console.log(commentRef.id);
 
       if (commentRef) {
         await updateDoc(doc(collectionRef, commentRef.id), {
