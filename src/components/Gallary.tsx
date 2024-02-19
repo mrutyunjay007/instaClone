@@ -1,32 +1,45 @@
 // import React from 'react'
 
-function Gallary() {
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setPostId } from "../Redux/Slice/CurrentGallaryPostSlice";
+
+function Gallary({
+  post: { postList },
+}: {
+  post: {
+    postList: { postId: string; postUrl: string }[];
+  };
+}) {
+  const dispatch = useDispatch();
+
   return (
     <div>
       {/* ========= all Posts of User ========== */}
 
       <div className=" w-full grid  grid-cols-3  auto-rows-fr gap-2 p-2">
-        <div className=" bg-slate-100">
-          <img
-            className="w-full h-full aspect-square object-cover "
-            src=""
-            alt=""
-          />
-        </div>
-        <div className=" bg-slate-100">
-          <img
-            className="w-full h-full aspect-square object-cover "
-            src=""
-            alt=""
-          />
-        </div>
-        <div className=" bg-slate-100">
-          <img
-            className="w-full h-full aspect-square object-cover "
-            src=""
-            alt=""
-          />
-        </div>
+        {postList.length == 0 ? (
+          <div className=" bg-slate-500 cursor-pointer">
+            <div className="w-full h-full aspect-square object-cover " />
+          </div>
+        ) : (
+          postList.map((post) => (
+            <Link to="/singlePost" key={post.postId}>
+              <div
+                className=" cursor-pointer "
+                onClick={() => {
+                  dispatch(setPostId({ postId: post.postId }));
+                }}
+              >
+                <img
+                  className="w-full h-full aspect-square object-cover "
+                  src={post.postUrl}
+                  alt=""
+                />
+              </div>
+            </Link>
+          ))
+        )}
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import {
   collection,
   deleteDoc,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   query,
@@ -46,6 +47,27 @@ class PostService {
         };
       });
       return postDataList;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async showSinglePost({ postId }: { postId: string }) {
+    try {
+      const docRef = doc(this.postCollectionRef, postId);
+      const post = await getDoc(docRef);
+      if (post.exists()) {
+        return {
+          postId,
+          userId: post.data().userId,
+          userName: post.data().userName,
+          profilePic: post.data().profilePicture,
+          postUrl: post.data().postUrl,
+          caption: post.data().caption,
+          likeCount: post.data().likeCount,
+        };
+      }
+      return null;
     } catch (error) {
       console.log(error);
     }

@@ -25,18 +25,40 @@ function User({
   const authUser = useSelector((state: RootState) => state.UserInfos.userData);
   const dispatch = useDispatch();
 
+  const [posts, setPosts] = useState<{ postId: string; postUrl: string }[]>([]);
+
   useEffect(() => {
-    (async (userId, authUserId) => {
-      const inFollowList = await profileService.isInFollowList({
-        userId,
-        authUserId,
+    authUser.userId != userData.userId &&
+      (async (userId, authUserId) => {
+        try {
+          const inFollowList = await profileService.isInFollowList({
+            userId,
+            authUserId,
+          });
+
+          if (inFollowList) {
+            setIsInFollowList(true);
+            inFollowList.following && setIsFollowing(true);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      })(userData.userId, authUser.userId);
+  }, []);
+
+  // Get users's uploaded posts to show in user-profile-gallary
+  useEffect(() => {
+    (async () => {
+      const postList = await profileService.getUploadedPosts({
+        userId: userData.userId,
       });
 
-      if (inFollowList) {
-        setIsInFollowList(true);
-        inFollowList.following && setIsFollowing(true);
+      if (postList) {
+        console.log(postList);
+
+        setPosts([...postList]);
       }
-    })(userData.userId, authUser.userId);
+    })();
   }, []);
 
   const handelFollowingSatus = () => {
@@ -173,7 +195,11 @@ function User({
       </div>
       {/* Galary Gride */}
       <div className="galary">
-        <Gallary></Gallary>
+        <Gallary
+          post={{
+            postList: [...posts],
+          }}
+        ></Gallary>
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import Create from "../components/CreateNewPost/Create";
 import Likes from "../components/Likes";
 import Comments from "../components/Comment/Comments";
 import Share from "../components/CreateNewPost/Share";
+import ShowSinglePost from "../components/ShowSinglePost";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,7 @@ export const router = createBrowserRouter(
       <Route path="othersProfile" element={<OthersProfile />} />
       <Route path="followers" element={<Follower />} />
       <Route path="following" element={<Following />} />
+      <Route path="singlePost" element={<ShowSinglePost />} />
     </Route>
   )
 );

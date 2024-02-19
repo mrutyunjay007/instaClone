@@ -230,6 +230,25 @@ class ProfileService {
       console.log(error);
     }
   }
+
+  async getUploadedPosts({ userId }: ID) {
+    try {
+      const collectionRef = collection(this.userCollectionRef, userId, "post");
+
+      const posts = await getDocs(collectionRef);
+
+      const postList = posts.docs.map((doc) => {
+        return {
+          postId: doc.data().postId,
+          postUrl: doc.data().postUrl,
+        };
+      });
+      // console.log(postList);
+      return postList;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export const profileService = new ProfileService();

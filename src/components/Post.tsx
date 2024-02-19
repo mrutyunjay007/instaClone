@@ -4,22 +4,26 @@ import Engagments from "./Engagments";
 // import post from "../assets/js-mock-up.png.png";
 import { IPost } from "../Redux/Slice/CurrentPostSlice";
 import { profileService } from "../Firebase/profileService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addOthersinfo } from "../Redux/Slice/OthersSlice";
 import { Link } from "react-router-dom";
+import { RootState } from "../Redux/store";
 
 function Post({
   posts: { postId, userId, userName, profilePic, postUrl, caption, likeCount },
 }: {
   posts: IPost;
 }) {
+  const authUserId = useSelector(
+    (state: RootState) => state.UserInfos.userData.userId
+  );
   const dispatch = useDispatch();
 
   return (
     <div className=" flex flex-col  gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
       {/* User Info */}
 
-      <Link to="/othersProfile">
+      <Link to={userId == authUserId ? "/userProfile" : "/othersProfile"}>
         <div
           className="flex w-full justify-start items-center gap-2 cursor-pointer"
           onClick={async () => {
