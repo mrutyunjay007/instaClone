@@ -20,7 +20,7 @@ function Post({
   const dispatch = useDispatch();
 
   return (
-    <div className=" flex flex-col  gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
+    <div className=" flex flex-col md:w-[468px] gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
       {/* User Info */}
 
       <Link to={userId == authUserId ? "/userProfile" : "/othersProfile"}>
@@ -28,11 +28,13 @@ function Post({
           className="flex w-full justify-start items-center gap-2 cursor-pointer"
           onClick={async () => {
             try {
-              const otherUserInfo = await profileService.otherUserProfile({
-                userId,
-              });
-              if (otherUserInfo) {
-                dispatch(addOthersinfo({ ...otherUserInfo }));
+              if (userId != authUserId) {
+                const otherUserInfo = await profileService.otherUserProfile({
+                  userId,
+                });
+                if (otherUserInfo) {
+                  dispatch(addOthersinfo({ ...otherUserInfo }));
+                }
               }
             } catch (error) {
               console.log(error);

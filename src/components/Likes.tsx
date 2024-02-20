@@ -3,6 +3,7 @@ import { postService } from "../Firebase/postService";
 import { useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
 import Connection from "./Connection";
+import BackBtn from "./SmallComponents/BackBtn";
 
 interface ILike {
   userName: string;
@@ -19,6 +20,7 @@ function Likes() {
 
   const [likeList, setLikeList] = useState<TLike>([]);
 
+  // Get All users who liked
   useEffect(() => {
     (async () => {
       const list = await postService.getAllUserFromLikeList({ postId });
@@ -30,11 +32,10 @@ function Likes() {
     })();
   }, []);
 
-  console.log(likeCount);
-
   return (
     <div className="w-full ">
-      <div className=" w-full h-[9vh] sticky top-0 flex justify-center items-center  border-b-2 border-s-slate-100">
+      <div className=" w-full h-[9vh] sticky top-0 flex gap-2 justify-center items-center  border-b-2 border-s-slate-100">
+        <BackBtn />
         <div>Likes</div>
         <div>{likeCount}</div>
       </div>

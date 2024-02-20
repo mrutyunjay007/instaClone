@@ -6,11 +6,7 @@ import SaveIcon from "../assets/Save.png";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/store";
 import { postService } from "../Firebase/postService";
-import {
-  IPost,
-  addCurrentPost,
-  upDatePostId,
-} from "../Redux/Slice/CurrentPostSlice";
+import { IPost, addCurrentPost } from "../Redux/Slice/CurrentPostSlice";
 import { Link } from "react-router-dom";
 
 function Engagments({
@@ -75,6 +71,21 @@ function Engagments({
     setIsLikedBuAuthUser(!isLikedBuAuthUser);
   };
 
+  // ADD: current post
+  const saveCurrentPost = () => {
+    dispatch(
+      addCurrentPost({
+        postId,
+        userId,
+        userName,
+        profilePic,
+        postUrl,
+        caption,
+        likeCount: currentLikeCount,
+      })
+    );
+  };
+
   return (
     <div className="flex flex-col gap-2 mt-1 pb-4 ml-2">
       {/* like comment save */}
@@ -97,24 +108,7 @@ function Engagments({
 
       {/* Show Likes */}
       <Link to="/likes">
-        <div
-          onClick={() => {
-            // ADD: current post
-            dispatch(
-              addCurrentPost({
-                postId,
-                userId,
-                userName,
-                profilePic,
-                postUrl,
-                caption,
-                likeCount: currentLikeCount,
-              })
-            );
-          }}
-        >
-          {`${currentLikeCount} Likes`}{" "}
-        </div>
+        <div onClick={saveCurrentPost}>{`${currentLikeCount} Likes`} </div>
       </Link>
 
       {/* caption */}
@@ -125,12 +119,7 @@ function Engagments({
 
       {/* comment */}
       <Link to="/comment">
-        <span
-          className="mt-2 cursor-pointer"
-          onClick={() => {
-            dispatch(upDatePostId({ postId }));
-          }}
-        >
+        <span className="mt-2 cursor-pointer" onClick={saveCurrentPost}>
           {"view all replies"}
         </span>
       </Link>

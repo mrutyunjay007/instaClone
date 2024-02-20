@@ -62,7 +62,7 @@ function Home() {
       <div className=" w-full sticky  top-0  md:hidden">
         <TopBar></TopBar>
       </div>
-      <div className=" flex  justify-center  items-center md:w-3/4 lg:w-1/2">
+      <div className=" flex  justify-center  items-center md:w-[630px] lg:w-1/2">
         <div className=" px-10">
           <div className="w-full">
             {isLoding ? (

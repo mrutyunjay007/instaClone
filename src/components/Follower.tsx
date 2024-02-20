@@ -5,6 +5,7 @@ import { RootState } from "../Redux/store";
 import { useSelector } from "react-redux";
 import { profileService } from "../Firebase/profileService";
 import { TConnection } from "../Redux/Slice/FollowSlice";
+import BackBtn from "./SmallComponents/BackBtn";
 
 function Follower() {
   const { userId } = useSelector((state: RootState) => state.CurrentUserInfo);
@@ -27,7 +28,9 @@ function Follower() {
   return (
     <div className="w-full ">
       <div className=" w-full h-[9vh] sticky top-0 flex justify-center items-center  border-b-2 border-s-slate-100">
-        Follower
+        <BackBtn></BackBtn>
+
+        <span className=" font-bold text-2xl"> Follower</span>
       </div>
       <div className=" mt-2 flex justify-center">
         <div className="w-full md:w-3/4  lg:w-1/2">

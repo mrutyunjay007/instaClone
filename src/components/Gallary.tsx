@@ -32,7 +32,7 @@ function Gallary({
                 }}
               >
                 <img
-                  className="w-full h-full aspect-square object-cover "
+                  className="w-full h-full  aspect-square object-cover "
                   src={post.postUrl}
                   alt=""
                 />
