@@ -97,9 +97,11 @@ function Engagments({
             <img src={LikeIcon} alt="" />
           )}
         </li>
-        <li className=" cursor-pointer">
-          <img src={CommentIcon} alt="" />
-        </li>
+        <Link to="/comment">
+          <li className=" cursor-pointer" onClick={saveCurrentPost}>
+            <img src={CommentIcon} alt="" />
+          </li>
+        </Link>
         <li className=" cursor-pointer">
           <img src={SaveIcon} alt="" />
           {/* <VscBookmark></VscBookmark> */}
