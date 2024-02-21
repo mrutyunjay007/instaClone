@@ -8,6 +8,7 @@ import { RootState } from "../Redux/store";
 import { postService } from "../Firebase/postService";
 import { IPost, addCurrentPost } from "../Redux/Slice/CurrentPostSlice";
 import { Link } from "react-router-dom";
+import SavedIcon from "../assets/Remove.svg";
 
 function Engagments({
   postInfo: {
@@ -26,17 +27,39 @@ function Engagments({
   const dispatch = useDispatch();
 
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
-  const [isLikedBuAuthUser, setIsLikedBuAuthUser] = useState(false);
+  const [isLikedByAuthUser, setIsLikedByAuthUser] = useState(false);
+  const [isSavedByAuthUser, setIsSavedByAuthUser] = useState(false);
 
   // Check: Liked by user or not
   useEffect(() => {
     (async () => {
-      const isLiked = await postService.isAuthUserLiked({
-        postId,
-        authUserId: authUser.userId,
-      });
-      if (isLiked) {
-        setIsLikedBuAuthUser(true);
+      try {
+        const isLiked = await postService.isAuthUserLiked({
+          postId,
+          authUserId: authUser.userId,
+        });
+        if (isLiked) {
+          setIsLikedByAuthUser(true);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  // Check: Saved by user or not
+  useEffect(() => {
+    (async () => {
+      try {
+        const isSaved = await postService.isPostSaved({
+          postId,
+          userId: authUser.userId,
+        });
+        if (isSaved) {
+          setIsSavedByAuthUser(true);
+        }
+      } catch (error) {
+        console.log(error);
       }
     })();
   }, []);
@@ -44,7 +67,7 @@ function Engagments({
   // Update Like-Count
   const handeUpdatingLikeCount = () => {
     // upate Like-Count in local
-    if (isLikedBuAuthUser) {
+    if (isLikedByAuthUser) {
       // Decrese LikeCount
       setCurrentLikeCount(currentLikeCount - 1);
     } else {
@@ -56,23 +79,43 @@ function Engagments({
     postService.updateLikeCount({
       postId,
       likeCount: currentLikeCount,
-      likeStatus: !isLikedBuAuthUser,
+      likeStatus: !isLikedByAuthUser,
     });
 
-    // Add authUser to post->Likes-List
+    // Add authUser to post->Likes-List and user->save
     postService.updateUsersInLikeList({
       userId: authUser.userId,
       userName: authUser.userName,
       profilePic: authUser.profilePic,
       postId,
-      likeStatus: !isLikedBuAuthUser,
+      likeStatus: !isLikedByAuthUser,
     });
 
-    setIsLikedBuAuthUser(!isLikedBuAuthUser);
+    setIsLikedByAuthUser(!isLikedByAuthUser);
+  };
+
+  //  Update Saving status
+  const handelSave = () => {
+    try {
+      const postData = {
+        postId,
+        postUrl,
+      };
+
+      postService.updateSaveStatusforCurrentUser({
+        postData,
+        authUserId: authUser.userId,
+        isSaved: !isSavedByAuthUser,
+      });
+
+      setIsSavedByAuthUser(!isSavedByAuthUser);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // ADD: current post
-  const saveCurrentPost = () => {
+  const handelCurrentPost = () => {
     dispatch(
       addCurrentPost({
         postId,
@@ -91,26 +134,29 @@ function Engagments({
       {/* like comment save */}
       <ul className="flex  items-center gap-4 ">
         <li onClick={handeUpdatingLikeCount} className=" cursor-pointer">
-          {isLikedBuAuthUser ? (
+          {isLikedByAuthUser ? (
             <img src={LikeAct} alt="" />
           ) : (
             <img src={LikeIcon} alt="" />
           )}
         </li>
         <Link to="/comment">
-          <li className=" cursor-pointer" onClick={saveCurrentPost}>
+          <li className=" cursor-pointer" onClick={handelCurrentPost}>
             <img src={CommentIcon} alt="" />
           </li>
         </Link>
-        <li className=" cursor-pointer">
-          <img src={SaveIcon} alt="" />
-          {/* <VscBookmark></VscBookmark> */}
+        <li className=" cursor-pointer" onClick={handelSave}>
+          {isSavedByAuthUser ? (
+            <img src={SavedIcon} alt="" />
+          ) : (
+            <img src={SaveIcon} alt="" />
+          )}
         </li>
       </ul>
 
       {/* Show Likes */}
       <Link to="/likes">
-        <div onClick={saveCurrentPost}>{`${currentLikeCount} Likes`} </div>
+        <div onClick={handelCurrentPost}>{`${currentLikeCount} Likes`} </div>
       </Link>
 
       {/* caption */}
@@ -121,8 +167,8 @@ function Engagments({
 
       {/* comment */}
       <Link to="/comment">
-        <span className="mt-2 cursor-pointer" onClick={saveCurrentPost}>
-          {"view all replies"}
+        <span className="mt-2 cursor-pointer" onClick={handelCurrentPost}>
+          {"view all comments"}
         </span>
       </Link>
     </div>

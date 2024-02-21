@@ -11,6 +11,11 @@ import { RootState } from "../Redux/store";
 import { useEffect, useState } from "react";
 import { upDateOthersFollowingCount } from "../Redux/Slice/OthersSlice";
 import BackBtn from "./SmallComponents/BackBtn";
+import GridIcon from "../assets/Grid.svg";
+import GridActIcon from "../assets/GridAct.svg";
+import SavedIcon from "../assets/savedPosts.svg";
+import SaveIcon from "../assets/Save.png";
+import { postService } from "../Firebase/postService";
 
 function User({
   userData,
@@ -26,6 +31,12 @@ function User({
   const dispatch = useDispatch();
 
   const [posts, setPosts] = useState<{ postId: string; postUrl: string }[]>([]);
+  const [savedPosts, setSavedPosts] = useState<
+    { postId: string; postUrl: string }[]
+  >([]);
+
+  const [isGrid, setGrid] = useState(true);
+  const [isSaved, setSaved] = useState(false);
 
   useEffect(() => {
     authUser.userId != userData.userId &&
@@ -204,9 +215,62 @@ function User({
         </div>
         {/* Galary Gride */}
         <div className="galary">
+          <div className="w-full h-[44px] mt-2 border-b border-s-slate-200 ">
+            {/* Activated */}
+            <div className="w-full relative h-1">
+              <div
+                className={`w-1/2 h-1/2 bg-slate-500 absolute ${
+                  isGrid ? "left-0" : "right-0"
+                }`}
+              ></div>
+            </div>
+
+            {/* Icons */}
+            <div className="flex justify-around pt-1 items-center w-full">
+              {/* grid Icon */}
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  setGrid(true);
+                  setSaved(false);
+                }}
+              >
+                {!isGrid ? (
+                  <img src={GridIcon} alt="" />
+                ) : (
+                  <img src={GridActIcon} alt="" />
+                )}
+              </span>
+
+              {/* saved Icon */}
+              <span
+                className=" cursor-pointer"
+                onClick={() => {
+                  (async () => {
+                    const saved = await postService.getAllSavedPosts({
+                      userId: userData.userId,
+                    });
+
+                    if (saved) {
+                      setSavedPosts([...saved]);
+                    }
+                  })();
+
+                  setGrid(false);
+                  setSaved(true);
+                }}
+              >
+                {!isSaved ? (
+                  <img src={SaveIcon} alt="" />
+                ) : (
+                  <img src={SavedIcon} alt="" />
+                )}
+              </span>
+            </div>
+          </div>
           <Gallary
             post={{
-              postList: [...posts],
+              postList: isGrid ? [...posts] : [...savedPosts],
             }}
           ></Gallary>
         </div>

@@ -19,7 +19,7 @@ function Gallary({
 
       <div className=" w-full grid  grid-cols-3  auto-rows-fr gap-2 p-2">
         {postList.length == 0 ? (
-          <div className=" bg-slate-500 cursor-pointer">
+          <div className=" bg-slate-300 ">
             <div className="w-full h-full aspect-square object-cover " />
           </div>
         ) : (

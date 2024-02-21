@@ -243,6 +243,79 @@ class PostService {
     });
     return likesList;
   }
+
+  //...........Saving Post........
+  async updateSaveStatusforCurrentUser({
+    postData: { postId, postUrl },
+    isSaved,
+    authUserId,
+  }: {
+    postData: {
+      postId: string;
+      postUrl: string;
+    };
+    isSaved: boolean;
+    authUserId: string;
+  }) {
+    try {
+      const postRef = doc(
+        this.postCollectionRef,
+        postId,
+        "savedBy",
+        authUserId
+      );
+      const userRef = doc(this.db, "User", authUserId, "saved", postId);
+
+      if (isSaved) {
+        // save for User collection
+        await setDoc(userRef, {
+          postId,
+          postUrl,
+        });
+        // save for Post collection
+        await setDoc(postRef, { userId: authUserId });
+      } else {
+        // remove from User collection
+        await deleteDoc(userRef);
+        // remove from Post collection
+        await deleteDoc(postRef);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async isPostSaved({ postId, userId }: { postId: string; userId: string }) {
+    try {
+      // Find in user that post is already been saved or not
+      const docRef = doc(this.db, "Posts", postId, "savedBy", userId);
+      const docSnapshot = await getDoc(docRef);
+      if (docSnapshot.exists()) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getAllSavedPosts({ userId }: { userId: string }) {
+    try {
+      const collectionRef = collection(this.db, "User", userId, "saved");
+      const dataSnap = await getDocs(collectionRef);
+
+      const savedPosts = dataSnap.docs.map((doc) => {
+        return {
+          postId: doc.data().postId,
+          postUrl: doc.data().postUrl,
+        };
+      });
+
+      return savedPosts;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 export const postService = new PostService();
