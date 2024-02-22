@@ -10,7 +10,7 @@ import { addOthersinfo } from "../Redux/Slice/OthersSlice";
 import { Link } from "react-router-dom";
 
 function Connection({
-  followersData: { userId, userName, profilePic, isFollowing },
+  followersData: { userId, userName, isFollowing },
   likeCount,
 }: {
   followersData: IConnection;
@@ -45,11 +45,11 @@ function Connection({
             }
           }}
         >
-          <div className="">
+          <div className=" dark:text-color">
             <VscAccount className="w-8 h-8"></VscAccount>{" "}
           </div>
 
-          <div className=" text-lg font-bold">
+          <div className=" text-lg font-bold dark:text-color">
             <span>{userName}</span>
           </div>
         </div>

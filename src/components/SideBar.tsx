@@ -1,4 +1,4 @@
-// import { useState } from "react";
+// import { useEffect, useRef, useState } from "react";
 import instaIcon from "../assets/InstagramIcon.svg";
 import { Link } from "react-router-dom";
 import instaLogoType from "../assets/insta logo.png";
@@ -6,13 +6,15 @@ import { RootState } from "../Redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import Nav from "./Nav";
 import { AtHome } from "../Redux/Slice/NavSlice";
+import ToggleBtn from "./SmallComponents/ToggleBtn";
 
 function SideBar() {
   const { isAtHome } = useSelector((state: RootState) => state.Navigation);
   const dispatch = useDispatch();
+
   return (
     // Container
-    <div className="  flex flex-col gap-10 items-center lg:items-start  h-screen w-[72px] lg:w-[244px] lg:pl-3 border-r-2  border-s-slate-100 bg-white ">
+    <div className="flex flex-col gap-10 items-center lg:items-start  h-screen w-[72px] lg:w-[244px] lg:pl-3  border-r-2 dark:border-r-[1px]  border-s-slate-100 bg-white  dark:bg-background">
       {/* insta icon */}
       <Link to="/">
         <div
@@ -34,6 +36,8 @@ function SideBar() {
       <div className="">
         <Nav></Nav>
       </div>
+
+      <ToggleBtn></ToggleBtn>
     </div>
   );
 }

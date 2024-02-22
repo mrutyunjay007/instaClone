@@ -9,14 +9,14 @@ import { Outlet } from "react-router-dom";
 
 function Layout() {
   return (
-    <div className=" md:flex justify-center ">
+    <div className=" md:flex justify-center dark:bg-background ">
       <Outlet></Outlet>
 
-      <div className=" hidden md:block fixed left-0">
+      <div className=" hidden  dark:bg-background md:block fixed left-0">
         <SideBar></SideBar>
       </div>
 
-      <div className="md:hidden">
+      <div className="md:hidden dark:bg-background">
         <FooterNav></FooterNav>
       </div>
     </div>

@@ -7,10 +7,13 @@ import { useEffect, useState } from "react";
 import { authService } from "./Firebase/authService";
 import { logIn, logOut } from "./Redux/Slice/UserSlice";
 import SignUp from "./components/SignUp";
+// import { useSelector } from "react-redux";
+// import { RootState } from "./Redux/store";
 
 function App() {
   const dispatch = useDispatch();
   const [isLogged, setLog] = useState(false);
+
   useEffect(() => {
     isLogged &&
       (async () => {
@@ -29,7 +32,7 @@ function App() {
   }, [isLogged]);
 
   return (
-    <>
+    <div className=" w-screen h-screen dark:bg-background">
       {!isLogged ? (
         <SignUp
           changeLog={() => {
@@ -39,7 +42,7 @@ function App() {
       ) : (
         <RouterProvider router={router} />
       )}
-    </>
+    </div>
   );
 }
 

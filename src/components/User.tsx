@@ -121,13 +121,13 @@ function User({
       {/* Body */}
       <div className=" md:mt-5 md:w-3/4  lg:w-[936px]">
         <div className="md:flex justify-evenly items-center ">
-          <div className="hidden md:block">
+          <div className=" dark:text-color hidden md:block">
             <VscAccount className="w-[150px] h-[150px]"></VscAccount>
           </div>
           <div>
             {/* User Name */}
-            <div className=" sticky top-0 flex justify-start items-center w-full h-[9vh] bg-white border-b-2 border-s-slate-100 md:border-none">
-              <span className=" font-bold text-2xl ml-2  md:font-normal">
+            <div className="  dark:bg-background sticky top-0 flex justify-start items-center w-full h-[9vh] bg-white border-b-2 border-s-slate-100 md:border-none">
+              <span className=" dark:text-color font-bold text-2xl ml-2  md:font-normal">
                 {userData.userName}
               </span>
             </div>
@@ -141,14 +141,14 @@ function User({
 
                 {/* user pic & name */}
                 <div className="  flex justify-start items-center md:hidden">
-                  <VscAccount className="w-[77px] h-[77px]" />
+                  <VscAccount className=" dark:text-color w-[77px] h-[77px]" />
                   {/* <img className=" rounded w-[77px] h-[77px]" src="" alt="" /> */}
                 </div>
 
                 {/* right side */}
 
                 {/* follow ans post Nums */}
-                <div className="flex-1 flex justify-evenly md:justify-between md:gap-3 lg:gap-3 items-center ">
+                <div className=" dark:text-color flex-1 flex justify-evenly md:justify-between md:gap-3 lg:gap-3 items-center ">
                   <div className=" flex flex-col md:flex-row md:gap-1 items-center">
                     <span className="font-bold  text-xl">{100}</span>
                     <span className=" font-normal text-lg">Posts</span>

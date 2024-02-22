@@ -20,7 +20,7 @@ function Post({
   const dispatch = useDispatch();
 
   return (
-    <div className=" flex flex-col md:w-[468px] gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
+    <div className=" dark:bg-background flex flex-col md:w-[468px] gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
       {/* User Info */}
 
       <Link to={userId == authUserId ? "/userProfile" : "/othersProfile"}>
@@ -41,10 +41,10 @@ function Post({
             }
           }}
         >
-          <span className="ml-2">
+          <span className="ml-2 dark:text-color">
             <VscAccount className="w-8 h-8" />
           </span>
-          <span className=" font-bold">{userName}</span>
+          <span className="dark:text-color  font-bold">{userName}</span>
         </div>
       </Link>
       {/* Posted Image */}

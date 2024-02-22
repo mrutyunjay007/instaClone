@@ -17,7 +17,7 @@ function Nav() {
   );
   const dispatch = useDispatch();
   return (
-    <ul className=" flex md:flex-col  md:gap-5 justify-evenly items-center w-full bg-white">
+    <ul className=" flex md:flex-col dark:bg-background md:gap-5 justify-evenly items-center w-full bg-white">
       {/* Home */}
       <Link to="/">
         <li

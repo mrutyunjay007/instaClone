@@ -137,7 +137,7 @@ function Engagments({
           {isLikedByAuthUser ? (
             <img src={LikeAct} alt="" />
           ) : (
-            <img src={LikeIcon} alt="" />
+            <img className=" dark:text-color" src={LikeIcon} alt="" />
           )}
         </li>
         <Link to="/comment">
@@ -156,18 +156,23 @@ function Engagments({
 
       {/* Show Likes */}
       <Link to="/likes">
-        <div onClick={handelCurrentPost}>{`${currentLikeCount} Likes`} </div>
+        <div className="dark:text-color" onClick={handelCurrentPost}>
+          {`${currentLikeCount} Likes`}{" "}
+        </div>
       </Link>
 
       {/* caption */}
       <div className="flex  items-center gap-2 mt-2 mb-1">
-        <div className=" font-bold">{userName}</div>
-        <div>{caption}</div>
+        <div className=" dark:text-color font-bold">{userName}</div>
+        <div className="dark:text-color">{caption}</div>
       </div>
 
       {/* comment */}
       <Link to="/comment">
-        <span className="mt-2 cursor-pointer" onClick={handelCurrentPost}>
+        <span
+          className="mt-2 cursor-pointer dark:text-color"
+          onClick={handelCurrentPost}
+        >
           {"view all comments"}
         </span>
       </Link>
