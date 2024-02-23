@@ -34,7 +34,6 @@ function ShowSinglePost() {
       </div>
     </div>
   );
-  //   return <div>{post && <Post posts={post}></Post>}</div>;
 }
 
 export default ShowSinglePost;

@@ -3,33 +3,99 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
-//components imp
+//----------------------Imp Components-----------------------
 import Layout from "../components/Layout";
 import Home from "../components/Home";
-import UserProfile from "../components/Profile/UserProfile";
-import OthersProfile from "../components/Profile/OthersProfile";
-import Follower from "../components/Follower";
-import Following from "../components/Following";
-import Create from "../components/CreateNewPost/Create";
-import Likes from "../components/Likes";
-import Comments from "../components/Comment/Comments";
-import Share from "../components/CreateNewPost/Share";
-import ShowSinglePost from "../components/ShowSinglePost";
+
+const UserProfile = lazy(() => import("../components/Profile/UserProfile"));
+const OthersProfile = lazy(() => import("../components/Profile/OthersProfile"));
+const Follower = lazy(() => import("../components/Follower"));
+const Following = lazy(() => import("../components/Following"));
+const Create = lazy(() => import("../components/CreateNewPost/Create"));
+const Likes = lazy(() => import("../components/Likes"));
+const Comments = lazy(() => import("../components/Comment/Comments"));
+const Share = lazy(() => import("../components/CreateNewPost/Share"));
+const ShowSinglePost = lazy(() => import("../components/ShowSinglePost"));
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
-      <Route path="likes" element={<Likes />} />
-      <Route path="comment" element={<Comments />} />
-      <Route path="upLoadPost" element={<Create />} />
-      <Route path="sharePost" element={<Share />} />
-      <Route path="userProfile" element={<UserProfile />} />
-      <Route path="othersProfile" element={<OthersProfile />} />
-      <Route path="followers" element={<Follower />} />
-      <Route path="following" element={<Following />} />
-      <Route path="singlePost" element={<ShowSinglePost />} />
+      <Route
+        path="likes"
+        element={
+          <Suspense>
+            <Likes></Likes>
+          </Suspense>
+        }
+      />
+      <Route
+        path="comment"
+        element={
+          <Suspense>
+            <Comments></Comments>
+          </Suspense>
+        }
+      />
+      <Route
+        path="upLoadPost"
+        element={
+          <Suspense>
+            <Create></Create>
+          </Suspense>
+        }
+      />
+      <Route
+        path="sharePost"
+        element={
+          <Suspense>
+            <Share></Share>
+          </Suspense>
+        }
+      />
+      <Route
+        path="userProfile"
+        element={
+          <Suspense>
+            <UserProfile></UserProfile>
+          </Suspense>
+        }
+      />
+      <Route
+        path="othersProfile"
+        element={
+          <Suspense>
+            <OthersProfile></OthersProfile>
+          </Suspense>
+        }
+      />
+      <Route
+        path="followers"
+        element={
+          <Suspense fallback={<div>Loading...</div>}>
+            <Follower />
+          </Suspense>
+        }
+      />
+      <Route
+        path="following"
+        element={
+          <Suspense>
+            <Following></Following>
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="singlePost"
+        element={
+          <Suspense>
+            <ShowSinglePost></ShowSinglePost>
+          </Suspense>
+        }
+      />
     </Route>
   )
 );
