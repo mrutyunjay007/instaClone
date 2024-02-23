@@ -32,7 +32,7 @@ function App() {
   }, [isLogged]);
 
   return (
-    <div className=" w-screen h-screen dark:bg-background">
+    <div className=" w-full h-screen dark:bg-background">
       {!isLogged ? (
         <SignUp
           changeLog={() => {

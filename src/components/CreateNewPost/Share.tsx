@@ -51,7 +51,9 @@ function Share() {
         {/* <span>
           <img src={BackIcon} alt="" />
         </span> */}
-        <span className=" font-semibold pl-1 ">Create new post</span>
+        <span className=" dark:text-color font-bold text-2xl cursor-pointer ">
+          Create New Post
+        </span>
         <div className="flex gap-3 py-2 items-center justify-center ">
           <span
             className="  rounded-md bg-[#0095f6] text-white font-semibold px-3 py-2  cursor-pointer"

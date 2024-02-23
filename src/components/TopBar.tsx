@@ -1,13 +1,14 @@
 // import React from 'react'
-import instaLogoType from "../assets/insta logo.png";
+
 import { VscSearch } from "react-icons/vsc";
+import InstaTypoIcon from "./SmallComponents/Icons/InstaIcon/instaTypoIcon";
 
 function NavBar() {
   return (
-    <div className="flex justify-between items-center w-full h-[9vh] bg-white border-b-2 border-s-slate-100">
+    <div className="flex justify-between items-center w-full h-[9vh] dark:bg-background bg-white border-b-2 border-s-slate-100">
       <div className="ml-4">
         <span className=" h-6 w-6 ">
-          <img src={instaLogoType} alt="" />
+          <InstaTypoIcon></InstaTypoIcon>
         </span>
       </div>
 

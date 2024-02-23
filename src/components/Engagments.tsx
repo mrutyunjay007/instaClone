@@ -1,14 +1,16 @@
-import LikeAct from "../assets/likeAct.png";
 import { useEffect, useState } from "react";
-import CommentIcon from "../assets/Comment.png";
-import LikeIcon from "../assets/Like.png";
-import SaveIcon from "../assets/Save.png";
+
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/store";
 import { postService } from "../Firebase/postService";
 import { IPost, addCurrentPost } from "../Redux/Slice/CurrentPostSlice";
 import { Link } from "react-router-dom";
-import SavedIcon from "../assets/Remove.svg";
+
+import SaveActIcon from "./SmallComponents/Icons/SaveIcon/SaveActIcon";
+import SaveIcon from "./SmallComponents/Icons/SaveIcon/SaveIcon";
+import LikeActIcon from "./SmallComponents/Icons/LikeIcon/LikeActIcon";
+import LikeIcon from "./SmallComponents/Icons/LikeIcon/LikeIcon";
+import CommentIcon from "./SmallComponents/Icons/CommentIcon/CommentIcon";
 
 function Engagments({
   postInfo: {
@@ -135,21 +137,21 @@ function Engagments({
       <ul className="flex  items-center gap-4 ">
         <li onClick={handeUpdatingLikeCount} className=" cursor-pointer">
           {isLikedByAuthUser ? (
-            <img src={LikeAct} alt="" />
+            <LikeActIcon></LikeActIcon>
           ) : (
-            <img className=" dark:text-color" src={LikeIcon} alt="" />
+            <LikeIcon></LikeIcon>
           )}
         </li>
         <Link to="/comment">
           <li className=" cursor-pointer" onClick={handelCurrentPost}>
-            <img src={CommentIcon} alt="" />
+            <CommentIcon></CommentIcon>
           </li>
         </Link>
         <li className=" cursor-pointer" onClick={handelSave}>
           {isSavedByAuthUser ? (
-            <img src={SavedIcon} alt="" />
+            <SaveActIcon></SaveActIcon>
           ) : (
-            <img src={SaveIcon} alt="" />
+            <SaveIcon></SaveIcon>
           )}
         </li>
       </ul>

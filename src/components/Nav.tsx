@@ -1,15 +1,14 @@
-// import { useState } from "react";
-// import {useCustomDispatch} from '../Redux/Store'
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { FaUserCircle } from "react-icons/fa";
-import HomeIcon from "../assets/HomeIcon.png";
-import HomeActIcon from "../assets/HomeActIcon.png";
-import CreateIcon from "../assets/CreateIcon.png";
-import CreateActIcon from "../assets/createActIcon.png";
+
 import { RootState } from "../Redux/store";
 import { AtHome, CreatingPost, InProfile } from "../Redux/Slice/NavSlice";
+import HomeIcon from "./SmallComponents/Icons/HomeIcon/HomeIcon";
+import HomeActIcon from "./SmallComponents/Icons/HomeIcon/HomeActIcon";
+import CreatePostIcon from "./SmallComponents/Icons/CreatePostIcon/createPostIcon";
+import CreatePostActIcon from "./SmallComponents/Icons/CreatePostIcon/CreatePostActIcon";
 
 function Nav() {
   const { isAtHome, isCreatingPost, isInProfile } = useSelector(
@@ -28,11 +27,11 @@ function Nav() {
         >
           {!isAtHome ? (
             <span className="w-6 h-6 ">
-              <img src={HomeIcon} alt="" />
+              <HomeIcon></HomeIcon>
             </span>
           ) : (
             <span className="w-6 h-6 ">
-              <img src={HomeActIcon} alt="" />
+              <HomeActIcon></HomeActIcon>
             </span>
           )}
           <span className=" font-bold text-lg lg:block hidden">Home</span>
@@ -49,11 +48,11 @@ function Nav() {
         >
           {!isCreatingPost ? (
             <span className="w-6 h-6 ">
-              <img src={CreateIcon} alt="" />
+              <CreatePostIcon></CreatePostIcon>
             </span>
           ) : (
             <span className="w-6 h-6 ">
-              <img src={CreateActIcon} alt="" />
+              <CreatePostActIcon></CreatePostActIcon>
             </span>
           )}
           <span className=" font-bold text-lg lg:block hidden">Create</span>
@@ -70,11 +69,11 @@ function Nav() {
         >
           {!isInProfile ? (
             <span>
-              <VscAccount className="w-6 h-6" />
+              <VscAccount className="w-6 h-6 dark:text-color" />
             </span>
           ) : (
             <span>
-              <FaUserCircle className="w-6 h-6" />
+              <FaUserCircle className="w-6 h-6 dark:text-color" />
             </span>
           )}
           <span className=" font-bold  text-lg lg:block  hidden">Profile</span>

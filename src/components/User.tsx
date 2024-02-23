@@ -14,8 +14,9 @@ import BackBtn from "./SmallComponents/BackBtn";
 import GridIcon from "../assets/Grid.svg";
 import GridActIcon from "../assets/GridAct.svg";
 import SavedIcon from "../assets/savedPosts.svg";
-import SaveIcon from "../assets/Save.png";
+
 import { postService } from "../Firebase/postService";
+import SaveIcon from "./SmallComponents/Icons/SaveIcon/SaveIcon";
 
 function User({
   userData,
@@ -261,7 +262,7 @@ function User({
                 }}
               >
                 {!isSaved ? (
-                  <img src={SaveIcon} alt="" />
+                  <SaveIcon></SaveIcon>
                 ) : (
                   <img src={SavedIcon} alt="" />
                 )}

@@ -25,9 +25,11 @@ function ShowSinglePost() {
 
   return (
     <div>
-      <div className="  bg-white w-screen h-[9vh] sticky flex justify-center items-center gap-3 top-0  border-b-2 border-s-slate-100 ">
+      <div className="  dark:bg-background bg-white w-screen h-[9vh] sticky flex justify-center items-center gap-3 top-0  border-b-2 border-s-slate-100 ">
         <BackBtn></BackBtn>
-        <span className=" font-bold text-2xl cursor-pointer">Post</span>
+        <span className=" dark:text-color font-bold text-2xl cursor-pointer">
+          Post
+        </span>
       </div>
       <div className=" flex w-full  justify-center  items-center ">
         {post && <Post posts={post}></Post>}

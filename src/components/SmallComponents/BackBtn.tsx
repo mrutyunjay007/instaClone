@@ -1,6 +1,9 @@
 // import React from 'react'
 import { useNavigate } from "react-router-dom";
-import BackIcon from "../../assets/Back.png";
+import DarkModeIconConverter from "./Icons/DarkModeIconConverter";
+import backDark from "../../assets/backIcon.png";
+import backLight from "../../assets/backWhite.png";
+// import BackIcon from "../../assets/Back.png";
 function BackBtn() {
   const navigate = useNavigate();
   return (
@@ -10,7 +13,10 @@ function BackBtn() {
         navigate(-1);
       }}
     >
-      <img src={BackIcon} alt="" />
+      <DarkModeIconConverter
+        dark={backDark}
+        light={backLight}
+      ></DarkModeIconConverter>
     </span>
   );
 }

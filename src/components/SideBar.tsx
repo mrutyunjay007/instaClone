@@ -1,12 +1,12 @@
-// import { useEffect, useRef, useState } from "react";
-import instaIcon from "../assets/InstagramIcon.svg";
 import { Link } from "react-router-dom";
-import instaLogoType from "../assets/insta logo.png";
+
 import { RootState } from "../Redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import Nav from "./Nav";
 import { AtHome } from "../Redux/Slice/NavSlice";
 import ToggleBtn from "./SmallComponents/ToggleBtn";
+import InstaIcon from "./SmallComponents/Icons/InstaIcon/InstaIcon";
+import InstaTypoIcon from "./SmallComponents/Icons/InstaIcon/instaTypoIcon";
 
 function SideBar() {
   const { isAtHome } = useSelector((state: RootState) => state.Navigation);
@@ -24,10 +24,10 @@ function SideBar() {
           }}
         >
           <span className="w-6 h-6 lg:hidden">
-            <img src={instaIcon} alt="" />
+            <InstaIcon></InstaIcon>
           </span>
           <span className=" lg:block md:hidden">
-            <img src={instaLogoType} alt="" />
+            <InstaTypoIcon></InstaTypoIcon>
           </span>
         </div>
       </Link>

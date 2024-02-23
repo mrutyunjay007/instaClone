@@ -13,7 +13,9 @@ function Create() {
     <div className="w-full">
       {/* nav */}
       <div className="w-full sticky h-[9vh] flex justify-center items-center border-b-2 border-s-slate-100">
-        <span className=" font-semibold">create new post</span>
+        <span className="  dark:text-color font-bold text-2xl cursor-pointer">
+          Create New Post
+        </span>
       </div>
 
       {/* post */}
