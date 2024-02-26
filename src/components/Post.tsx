@@ -8,19 +8,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { addOthersinfo } from "../Redux/Slice/OthersSlice";
 import { Link } from "react-router-dom";
 import { RootState } from "../Redux/store";
+// import { useState } from "react";
+import Image from "./SmallComponents/Image";
 
 function Post({
   posts: { postId, userId, userName, profilePic, postUrl, caption, likeCount },
 }: {
   posts: IPost;
 }) {
+  // const [imageLoaded, setImageLoaded] = useState(false);
+  // console.log(imageLoaded);
+
   const authUserId = useSelector(
     (state: RootState) => state.UserInfos.userData.userId
   );
   const dispatch = useDispatch();
 
   return (
-    <div className=" dark:bg-background flex flex-col md:w-[468px] gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
+    <div className=" dark:bg-background flex flex-col w-full md:w-[468px] gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
       {/* User Info */}
 
       <Link to={userId == authUserId ? "/userProfile" : "/othersProfile"}>
@@ -48,8 +53,8 @@ function Post({
         </div>
       </Link>
       {/* Posted Image */}
-      <div className="w-full">
-        <img className="w-full h-full overflow-hidden" src={postUrl} alt="" />
+      <div className="w-full aspect-square">
+        <Image url={postUrl}></Image>
       </div>
       {/* Responses */}
       <div className="w-full">

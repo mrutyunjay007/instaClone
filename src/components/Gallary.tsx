@@ -3,6 +3,7 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPostId } from "../Redux/Slice/CurrentGallaryPostSlice";
+import Image from "./SmallComponents/Image";
 
 function Gallary({
   post: { postList },
@@ -31,11 +32,12 @@ function Gallary({
                   dispatch(setPostId({ postId: post.postId }));
                 }}
               >
-                <img
+                {/* <img
                   className="w-full h-full  aspect-square object-cover "
                   src={post.postUrl}
                   alt=""
-                />
+                /> */}
+                <Image url={post.postUrl}></Image>
               </div>
             </Link>
           ))
