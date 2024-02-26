@@ -7,7 +7,7 @@ import { RootState } from "../Redux/store";
 import { AtHome, CreatingPost, InProfile } from "../Redux/Slice/NavSlice";
 import HomeIcon from "./SmallComponents/Icons/HomeIcon/HomeIcon";
 import HomeActIcon from "./SmallComponents/Icons/HomeIcon/HomeActIcon";
-import CreatePostIcon from "./SmallComponents/Icons/CreatePostIcon/createPostIcon";
+import CreatePostIcon from "./SmallComponents/Icons/CreatePostIcon/CreatePostIcon";
 import CreatePostActIcon from "./SmallComponents/Icons/CreatePostIcon/CreatePostActIcon";
 
 function Nav() {

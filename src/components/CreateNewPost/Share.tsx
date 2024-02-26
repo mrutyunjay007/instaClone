@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
 import { useState } from "react";
 import { postService } from "../../Firebase/postService";
+import imageCompression from "browser-image-compression";
 import {
   newPostUpLoadingDone,
   setUploadedPost,
@@ -25,8 +26,28 @@ function Share() {
   const handelShare = async () => {
     setLoading(true);
     if (postMetaData != null) {
+      // image compression
+
+      //conver image size in kB
+      const imageSize = Math.round(postMetaData.size / 1024);
+
+      // more than 1.5Mb not allow
+      if (imageSize > 1536) {
+        console.log("more than 1.5MB is not allow");
+        return;
+      }
+
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      };
+
+      // file comression
+      const compressedFile = await imageCompression(postMetaData, options);
+
       const postData = await postService.createNewPost({
-        postMetaData,
+        postMetaData: compressedFile,
         userName: authUser.userData.userName,
         userId: authUser.userData.userId,
         profilePic: authUser.userData.profilePic,
