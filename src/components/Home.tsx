@@ -9,6 +9,7 @@ import { TPostList } from "../Redux/Slice/CurrentPostSlice";
 import { RootState } from "../Redux/store";
 import { newPostUpLoadingDone } from "../Redux/Slice/CreatePostSlice";
 import { AtHome } from "../Redux/Slice/NavSlice";
+import PostsLoader from "./SmallComponents/loaders/PostsLoader";
 
 function Home() {
   const newPost = useSelector(
@@ -66,7 +67,7 @@ function Home() {
         {/* <div className=" px-10"> */}
         <div className="w-full">
           {isLoding ? (
-            <div>Loading...</div>
+            <PostsLoader></PostsLoader>
           ) : (
             postList.map((post) => (
               <Post key={post.postId} posts={{ ...post }}></Post>
