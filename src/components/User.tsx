@@ -17,6 +17,7 @@ import SavedIcon from "../assets/savedPosts.svg";
 
 import { postService } from "../Firebase/postService";
 import SaveIcon from "./SmallComponents/Icons/SaveIcon/SaveIcon";
+import Spiner from "./SmallComponents/loaders/Spiner";
 
 function User({
   userData,
@@ -27,6 +28,7 @@ function User({
 }) {
   const [isInFollowList, setIsInFollowList] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false); //followed by me or not
+  const [isFollowLoader, setIsFollowLoader] = useState(true);
 
   const authUser = useSelector((state: RootState) => state.UserInfos.userData);
   const dispatch = useDispatch();
@@ -39,6 +41,7 @@ function User({
   const [isGrid, setGrid] = useState(true);
   const [isSaved, setSaved] = useState(false);
 
+  // other-user follow to current-user or not
   useEffect(() => {
     authUser.userId != userData.userId &&
       (async (userId, authUserId) => {
@@ -47,10 +50,14 @@ function User({
             userId,
             authUserId,
           });
+          console.log(inFollowList);
 
           if (inFollowList) {
-            setIsInFollowList(true);
-            inFollowList.following && setIsFollowing(true);
+            //me followed by other
+            inFollowList.following && setIsInFollowList(true);
+            //other followed by me
+            inFollowList.follower && setIsFollowing(true);
+            setIsFollowLoader(false);
           }
         } catch (error) {
           console.log(error);
@@ -66,8 +73,6 @@ function User({
       });
 
       if (postList) {
-        console.log(postList);
-
         setPosts([...postList]);
       }
     })();
@@ -207,9 +212,13 @@ function User({
               onClick={handelFollowingSatus}
             >
               <div className=" flex justify-center rounded-md items-center p-5 mt-4 w-full h-8 bg-[#0095f6]  cursor-pointer">
-                <span className="flex justify-center items-center h-full w-[90%] rounded-[10px]  text-white font-bold">
-                  {isFollowing ? "Following" : "Follow"}
-                </span>
+                {isFollowLoader ? (
+                  <Spiner w={8} h={8}></Spiner>
+                ) : (
+                  <span className="flex justify-center items-center h-full w-[90%] rounded-[10px]  text-white font-bold">
+                    {isFollowing ? "Following" : "Follow"}
+                  </span>
+                )}
               </div>
             </div>
           </div>

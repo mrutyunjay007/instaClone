@@ -106,12 +106,8 @@ class ProfileService {
   }
 
   async isInFollowList({ userId, authUserId }: AuthID) {
-    const docRefAuth = doc(
-      this.userCollectionRef,
-      authUserId,
-      "follow",
-      userId
-    );
+    const docRefAuth = doc(this.db, "User", authUserId, "follow", userId);
+
     const docSnapAuth = await getDoc(docRefAuth);
 
     if (docSnapAuth.exists()) {
