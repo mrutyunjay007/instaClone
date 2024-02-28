@@ -8,6 +8,7 @@ import {
   setUploadedPost,
 } from "../../Redux/Slice/CreatePostSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { upadateNumberOfPost } from "../../Redux/Slice/UserSlice";
 
 function Share() {
   const { postUrl, postMetaData } = useSelector(
@@ -52,9 +53,11 @@ function Share() {
         userId: authUser.userData.userId,
         profilePic: authUser.userData.profilePic,
         caption,
+        currentNumberOfPost: authUser.userData.postNumber,
       });
       if (postData) {
         dispatch(setUploadedPost({ ...postData }));
+        dispatch(upadateNumberOfPost());
         setLoading(false);
         navigate("/");
       }

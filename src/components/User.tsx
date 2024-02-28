@@ -153,10 +153,12 @@ function User({
 
                 {/* right side */}
 
-                {/* follow ans post Nums */}
+                {/* follow and post Nums */}
                 <div className=" dark:text-color flex-1 flex justify-evenly md:justify-between md:gap-3 lg:gap-3 items-center ">
                   <div className=" flex flex-col md:flex-row md:gap-1 items-center">
-                    <span className="font-bold  text-xl">{100}</span>
+                    <span className="font-bold  text-xl">
+                      {userData.postNumber}
+                    </span>
                     <span className=" font-normal text-lg">Posts</span>
                   </div>
 

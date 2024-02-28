@@ -80,12 +80,14 @@ class PostService {
     userId,
     profilePic,
     caption,
+    currentNumberOfPost,
   }: {
     postMetaData: File;
     userName: string;
     userId: string;
     profilePic: string;
     caption: string;
+    currentNumberOfPost: number;
   }) {
     try {
       if (postMetaData != null) {
@@ -120,6 +122,10 @@ class PostService {
           postId: postInfo.id,
           postUrl: url,
         });
+
+        //increase post count in db
+        const docRef = doc(this.db, "User", userId);
+        await updateDoc(docRef, { postNumber: currentNumberOfPost + 1 });
 
         return {
           postId: postInfo.id,

@@ -87,6 +87,7 @@ class AuthService {
             profilePic: docSnap.data().profilePic,
             follower: docSnap.data().followerNumber,
             following: docSnap.data().followingNumber,
+            postNumber: docSnap.data().postNumber,
           };
         }
       }

@@ -7,6 +7,7 @@ export interface IUser {
   profilePic: string;
   follower: number;
   following: number;
+  postNumber: number;
 }
 const emptyUserData: IUser = {
   userName: "",
@@ -15,6 +16,7 @@ const emptyUserData: IUser = {
   profilePic: "",
   follower: 0,
   following: 0,
+  postNumber: 0,
 };
 
 const initialState = {
@@ -46,8 +48,12 @@ const userSlice = createSlice({
         state.userData.following -= 1;
       }
     },
+    upadateNumberOfPost(state) {
+      state.userData.postNumber += 1;
+    },
   },
 });
 
 export default userSlice.reducer;
-export const { logIn, logOut, upDateUserFollowingCount } = userSlice.actions;
+export const { logIn, logOut, upDateUserFollowingCount, upadateNumberOfPost } =
+  userSlice.actions;
