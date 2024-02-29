@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPostId } from "../Redux/Slice/CurrentGallaryPostSlice";
 import Image from "./SmallComponents/Image";
+import GallaryLoader from "./SmallComponents/loaders/GallaryLoader";
 
 function Gallary({
   post: { postList },
@@ -20,9 +21,7 @@ function Gallary({
 
       <div className=" w-full grid  grid-cols-3  auto-rows-fr gap-2 p-2">
         {postList.length == 0 ? (
-          <div className=" bg-slate-300 ">
-            <div className="w-full h-full aspect-square object-cover " />
-          </div>
+          <GallaryLoader></GallaryLoader>
         ) : (
           postList.map((post) => (
             <Link to="/singlePost" key={post.postId}>
@@ -32,11 +31,6 @@ function Gallary({
                   dispatch(setPostId({ postId: post.postId }));
                 }}
               >
-                {/* <img
-                  className="w-full h-full  aspect-square object-cover "
-                  src={post.postUrl}
-                  alt=""
-                /> */}
                 <Image url={post.postUrl}></Image>
               </div>
             </Link>
