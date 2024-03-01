@@ -4,7 +4,7 @@ function PostLoader() {
   return (
     <>
       {/* user info */}
-      <div className="flex w-full justify-start items-center gap-2">
+      <div className="flex w-full justify-start items-center gap-2 animate-pulse">
         {/* profile picture */}
         <span className="ml-1">
           <div className="w-9 h-9 rounded-full bg-slate-200" />

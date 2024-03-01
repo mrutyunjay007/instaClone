@@ -34,18 +34,23 @@ function ToggleBtn() {
         }}
       />
 
-      {!isChecked ? (
-        <div>
-          <FiSun className="w-6 h-6"></FiSun>
-        </div>
-      ) : (
-        <div>
-          <FiMoon
-            className="w-6 h-6  text-slate-100 "
-            // style={{ color: "white" }}
-          ></FiMoon>
-        </div>
-      )}
+      {/* {!isChecked ? ( */}
+      <div
+        className={`${!isChecked ? "block" : "hidden"} ${
+          isChecked && "animate-ping"
+        } duration-500`}
+      >
+        <FiSun className="w-6 h-6"></FiSun>
+      </div>
+      {/* ) : ( */}
+      <div className={`${isChecked ? "block" : "hidden"}`}>
+        <FiMoon
+          className="w-6 h-6  text-slate-100 "
+          // style={{ color: "white" }}
+        ></FiMoon>
+      </div>
+      {/* )} */}
+      {/* </div> */}
     </div>
   );
 }

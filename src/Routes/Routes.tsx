@@ -17,6 +17,9 @@ const Create = lazy(() => import("../components/CreateNewPost/Create"));
 const Likes = lazy(() => import("../components/Likes"));
 const Comments = lazy(() => import("../components/Comment/Comments"));
 const Share = lazy(() => import("../components/CreateNewPost/Share"));
+const Notification = lazy(
+  () => import("../components/Notifications/NotificationBody")
+);
 const ShowSinglePost = lazy(() => import("../components/ShowSinglePost"));
 
 export const router = createBrowserRouter(
@@ -93,6 +96,15 @@ export const router = createBrowserRouter(
         element={
           <Suspense>
             <ShowSinglePost></ShowSinglePost>
+          </Suspense>
+        }
+      />
+
+      <Route
+        path="notification"
+        element={
+          <Suspense>
+            <Notification></Notification>
           </Suspense>
         }
       />

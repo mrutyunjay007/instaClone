@@ -1,7 +1,8 @@
 // import React from 'react'
 
-import { VscSearch } from "react-icons/vsc";
+// import { VscSearch } from "react-icons/vsc";
 import InstaTypoIcon from "./SmallComponents/Icons/InstaIcon/instaTypoIcon";
+import TopRightSetOfComponents from "./SmallComponents/TopRightSetOfComponents";
 
 function NavBar() {
   return (
@@ -12,11 +13,7 @@ function NavBar() {
         </span>
       </div>
 
-      <div className=" mr-4">
-        <span className=" h-6 w-4 ">
-          <VscSearch></VscSearch>
-        </span>
-      </div>
+      <TopRightSetOfComponents></TopRightSetOfComponents>
     </div>
   );
 }

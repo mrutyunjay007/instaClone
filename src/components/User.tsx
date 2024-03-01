@@ -1,5 +1,6 @@
 // import React from 'react'
 import { VscAccount } from "react-icons/vsc";
+
 import Gallary from "./Gallary";
 import { IUser, upDateUserFollowingCount } from "../Redux/Slice/UserSlice";
 import { Link } from "react-router-dom";
@@ -18,6 +19,8 @@ import SavedIcon from "../assets/savedPosts.svg";
 import { postService } from "../Firebase/postService";
 import SaveIcon from "./SmallComponents/Icons/SaveIcon/SaveIcon";
 import Spiner from "./SmallComponents/loaders/Spiner";
+
+import TopRightSetOfComponents from "./SmallComponents/TopRightSetOfComponents";
 
 function User({
   userData,
@@ -132,10 +135,11 @@ function User({
           </div>
           <div>
             {/* User Name */}
-            <div className="  dark:bg-background sticky top-0 flex justify-start items-center w-full h-[9vh] bg-white border-b-2 border-s-slate-100 md:border-none">
+            <div className="  dark:bg-background sticky top-0 flex justify-between items-center w-full h-[9vh] bg-white border-b-2 border-s-slate-100 md:border-none">
               <span className=" dark:text-color font-bold text-2xl ml-2  md:font-normal">
                 {userData.userName}
               </span>
+              <TopRightSetOfComponents></TopRightSetOfComponents>
             </div>
             {/* profile componenet */}
             <div className="flex flex-col w-full">
