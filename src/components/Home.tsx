@@ -11,10 +11,28 @@ import { newPostUpLoadingDone } from "../Redux/Slice/CreatePostSlice";
 import { AtHome } from "../Redux/Slice/NavSlice";
 import PostsLoader from "./SmallComponents/loaders/PostsLoader";
 
+// import {
+//   INotificationData,
+//   notificationService,
+// } from "../Firebase/notificationService";
+// import { getAllNotification } from "../Redux/Slice/NotificationSlice";
+// import {
+//   INotificationData,
+//   notificationService,
+// } from "../Firebase/notificationService";
+// import { Unsubscribe } from "firebase/auth";
+// import { getAllNotification } from "../Redux/Slice/NotificationSlice";
+
 function Home() {
   const newPost = useSelector(
     (state: RootState) => state.CreatePostInfo.uploadedPost
   );
+  // const numberOfNotification = useSelector(
+  //   (state: RootState) => state.NotificationInfo.notifications.length
+  // );
+  // const userId = useSelector(
+  //   (state: RootState) => state.UserInfos.userData.userId
+  // );
 
   const dispatch = useDispatch();
   const [postList, setPostList] = useState<TPostList>([]);
@@ -38,6 +56,23 @@ function Home() {
       }
     })();
   }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       notificationService.getAllNotificationsFirstTime(
+  //         userId,
+  //         (notificationData: INotificationData, notificationId: string) => {
+  //           //push in notificatin-state
+  //           dispatch(
+  //             getAllNotification({ ...notificationData, id: notificationId })
+  //           );
+  //         }
+  //       );
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, []);
 
   // Add new Post
   useEffect(() => {
@@ -57,6 +92,28 @@ function Home() {
       dispatch(AtHome());
     }
   }, [newPost]);
+
+  // // Get all Notification
+  // useEffect(() => {
+  //   let unsubscribe: Unsubscribe | undefined;
+
+  //   (async () => {
+  //     // get notifications from db
+  //     unsubscribe = await notificationService.getNotifications(
+  //       userId,
+  //       (notificationData: INotificationData, notificationId: string) => {
+  //         //push in notificatin-state
+  //         dispatch(
+  //           getAllNotification({ ...notificationData, id: notificationId })
+  //         );
+  //       }
+  //     );
+  //   })();
+
+  //   return () => {
+  //     unsubscribe !== undefined && unsubscribe();
+  //   };
+  // }, [userId]);
 
   return (
     <>

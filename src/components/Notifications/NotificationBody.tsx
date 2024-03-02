@@ -1,11 +1,14 @@
-// import React from "react";
-
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import SingleNotification from "./SingleNotification";
 import { RiArrowLeftSLine } from "react-icons/ri";
+import { RootState } from "../../Redux/store";
 
 function NotificationBody() {
   const navigater = useNavigate();
+  const notificatins = useSelector(
+    (state: RootState) => state.NotificationInfo.notifications
+  );
 
   return (
     <>
@@ -23,12 +26,16 @@ function NotificationBody() {
         {/* BackBtn */}
       </div>
       <div className="flex flex-col justify-center items-center w-full">
-        <SingleNotification
-          userName="ram"
-          type="follow"
-          userId="1025" //temporary
-          noticeId="21546" //temporary
-        ></SingleNotification>
+        {notificatins.map((notification) => (
+          <SingleNotification
+            key={notification.id}
+            id={notification.id}
+            userName={notification.senderUserName}
+            type={notification.type}
+            userId={notification.senderId}
+            noticeId={notification.noticeId}
+          ></SingleNotification>
+        ))}
       </div>
     </>
   );

@@ -10,6 +10,7 @@ import CommentSlice from "./Slice/CommentSlice";
 import CreatePostSlice from "./Slice/CreatePostSlice";
 import CurrentGallaryPostSlice from "./Slice/CurrentGallaryPostSlice";
 import DarkMOdeSlice from "./Slice/DarkMOdeSlice";
+import NotificationSlice from "./Slice/NotificationSlice";
 
 const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ const store = configureStore({
     CommentInfo: CommentSlice,
     CreatePostInfo: CreatePostSlice,
     CurrentGallaryPostInfo: CurrentGallaryPostSlice,
+    NotificationInfo: NotificationSlice,
     DarkModeEnable: DarkMOdeSlice,
   },
 });

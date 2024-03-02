@@ -7,17 +7,20 @@ import { profileService } from "../../Firebase/profileService";
 import { addOthersinfo } from "../../Redux/Slice/OthersSlice";
 import { useNavigate } from "react-router-dom";
 import { setPostId } from "../../Redux/Slice/CurrentGallaryPostSlice";
+import { deleteSingleNotification } from "../../Redux/Slice/NotificationSlice";
 
 function SingleNotification({
   userName,
   type,
-  userId,
+  // userId,
   noticeId,
+  id,
 }: {
   userName: string;
   type: string;
   userId: string;
   noticeId: string;
+  id: string;
 }) {
   const dispatch = useDispatch();
   const navigater = useNavigate();
@@ -56,7 +59,10 @@ function SingleNotification({
   return (
     <div
       className=" cursor-pointer mt-2 flex gap-2 items-center p-3 justify-start font-semibold w-3/4  border-2 border-s-slate-100 drop-shadow-xl rounded-lg "
-      onClick={notificationHandeler}
+      onClick={() => {
+        notificationHandeler();
+        dispatch(deleteSingleNotification(id));
+      }}
     >
       <span>
         <RiAccountCircleLine className="size-7 dark:text-white" />

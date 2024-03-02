@@ -1,13 +1,13 @@
-// import React from "react";
-// import Follower from "./Follower";
-// import Following from "./Following";
 import FooterNav from "./FooterNav";
 // import Home from "./Home";
 import SideBar from "./SideBar";
 // import User from "./User";
 import { Outlet } from "react-router-dom";
+import useNotification from "../Hooks/useNotification";
 
 function Layout() {
+  //get all notifications
+  useNotification();
   return (
     <div className=" md:flex justify-center dark:bg-background ">
       <Outlet></Outlet>
