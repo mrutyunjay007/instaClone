@@ -20,6 +20,7 @@ const Share = lazy(() => import("../components/CreateNewPost/Share"));
 const Notification = lazy(
   () => import("../components/Notifications/NotificationBody")
 );
+const Search = lazy(() => import("../components/Search/Search"));
 const ShowSinglePost = lazy(() => import("../components/ShowSinglePost"));
 
 export const router = createBrowserRouter(
@@ -105,6 +106,14 @@ export const router = createBrowserRouter(
         element={
           <Suspense>
             <Notification></Notification>
+          </Suspense>
+        }
+      />
+      <Route
+        path="search"
+        element={
+          <Suspense>
+            <Search></Search>
           </Suspense>
         }
       />

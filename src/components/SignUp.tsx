@@ -3,19 +3,33 @@
 import { useEffect, useState } from "react";
 import { authService } from "../Firebase/authService";
 import instaIcon from "../assets/InstagramIcon.svg";
+import UserIdName from "./UserIdName";
 
 function SignUp({ changeLog }: { changeLog: () => void }) {
   const [signUp, setSignUp] = useState(false);
+  const [isUserIdName, setIsUserIdName] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState("");
 
   //SignIn
   useEffect(() => {
     if (signUp) {
       (async () => {
         await authService.googleSignUp();
-        changeLog();
+        const user = await authService.getCurrentUser();
+
+        if (user?.userIdName.length === 0) {
+          setIsUserIdName(true);
+          setCurrentUserId(user.userId);
+        } else {
+          changeLog();
+        }
       })();
     }
   }, [signUp]);
+
+  if (isUserIdName) {
+    return <UserIdName changeLog={changeLog} currentUserId={currentUserId} />;
+  }
 
   return (
     <div className="w-full h-screen flex justify-center items-center">

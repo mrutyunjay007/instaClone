@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 import { authService } from "./Firebase/authService";
 import { logIn, logOut } from "./Redux/Slice/UserSlice";
 import SignUp from "./components/SignUp";
-// import { useSelector } from "react-redux";
-// import { RootState } from "./Redux/store";
+// import UserIdName from "./components/UserIdName";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +31,7 @@ function App() {
   }, [isLogged]);
 
   return (
+    // <UserIdName></UserIdName>
     <div className=" w-full h-screen dark:bg-background">
       {!isLogged ? (
         <SignUp

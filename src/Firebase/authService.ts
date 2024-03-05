@@ -7,12 +7,13 @@ import {
 } from "firebase/auth";
 import {
   collection,
-  doc,
   setDoc,
   getFirestore,
   CollectionReference,
   Firestore,
   getDoc,
+  doc,
+  updateDoc,
 } from "firebase/firestore";
 import { app } from "./config";
 // import { Todo } from "../utility/TodoType";
@@ -47,6 +48,7 @@ class AuthService {
             if (!docSnap.exists()) {
               const createNewUser = {
                 userName,
+                userIdName: "",
                 userId,
                 profilePic,
                 userBio: "",
@@ -82,6 +84,7 @@ class AuthService {
 
           return {
             userName: docSnap.data().userName,
+            userIdName: docSnap.data().userIdName,
             userId: docSnap.data().userId,
             userBio: docSnap.data().userBio,
             profilePic: docSnap.data().profilePic,
@@ -92,6 +95,22 @@ class AuthService {
         }
       }
       return null;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async updateUserIdName({
+    userId,
+    userIdName,
+  }: {
+    userId: string;
+    userIdName: string;
+  }) {
+    try {
+      if (userId.length > 0) {
+        const docRef = doc(this.db, "User", userId);
+        await updateDoc(docRef, { userIdName });
+      }
     } catch (error) {
       console.log(error);
     }

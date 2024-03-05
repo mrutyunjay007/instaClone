@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface IUser {
   userName: string;
+  userIdName: string;
   userId: string;
   userBio: string;
   profilePic: string;
@@ -11,6 +12,7 @@ export interface IUser {
 }
 const emptyUserData: IUser = {
   userName: "",
+  userIdName: "",
   userId: "",
   userBio: "",
   profilePic: "",
@@ -51,9 +53,17 @@ const userSlice = createSlice({
     upadateNumberOfPost(state) {
       state.userData.postNumber += 1;
     },
+    updateUserIdName(state, actions: PayloadAction<string>) {
+      state.userData.userIdName = actions.payload;
+    },
   },
 });
 
 export default userSlice.reducer;
-export const { logIn, logOut, upDateUserFollowingCount, upadateNumberOfPost } =
-  userSlice.actions;
+export const {
+  logIn,
+  logOut,
+  upDateUserFollowingCount,
+  upadateNumberOfPost,
+  updateUserIdName,
+} = userSlice.actions;

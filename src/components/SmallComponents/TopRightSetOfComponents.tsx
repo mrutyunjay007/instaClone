@@ -15,11 +15,6 @@ function TopRightSetOfComponents() {
       {/* Notification */}
       <Link to={"/notification"}>
         <span className="relative cursor-pointer">
-          {/* <div
-            className={` ${
-              numberOfNotifications > 0 ? "block" : "hidden"
-            } absolute rounded-full size-[10px] top-0 right-0 border-2 dark:border-background border-s-slate-200 bg-red-700 dark:bg-red-600 `}
-          ></div> */}
           <RiHeart3Line
             className={`size-6 dark:text-white ${
               numberOfNotifications > 0 && "animate-bouncy fill-red-700"
@@ -34,9 +29,11 @@ function TopRightSetOfComponents() {
       </span>
 
       {/* Search */}
-      <span className="">
-        <RiSearchLine className="size-6 dark:text-white cursor-pointer"></RiSearchLine>
-      </span>
+      <Link to={"/search"}>
+        <span className="">
+          <RiSearchLine className="size-6 dark:text-white cursor-pointer"></RiSearchLine>
+        </span>
+      </Link>
     </span>
   );
 }
