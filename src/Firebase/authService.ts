@@ -16,6 +16,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { app } from "./config";
+import { uploadImageInServerService } from "./UploadImageInServerService";
 // import { Todo } from "../utility/TodoType";
 
 class AuthService {
@@ -40,7 +41,7 @@ class AuthService {
         try {
           if (user) {
             const userName = user.displayName;
-            const profilePic = user.photoURL;
+
             const userId = user.uid;
 
             const docRef = doc(this.collectionRef, userId);
@@ -50,7 +51,7 @@ class AuthService {
                 userName,
                 userIdName: "",
                 userId,
-                profilePic,
+                profilePic: "",
                 userBio: "",
                 followerNumber: 0,
                 followingNumber: 0,
@@ -99,6 +100,7 @@ class AuthService {
       console.log(error);
     }
   }
+
   async updateUserIdName({
     userId,
     userIdName,
@@ -110,6 +112,68 @@ class AuthService {
       if (userId.length > 0) {
         const docRef = doc(this.db, "User", userId);
         await updateDoc(docRef, { userIdName });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateUserBio({
+    userId,
+    userBio,
+  }: {
+    userId: string;
+    userBio: string;
+  }) {
+    try {
+      if (userId.length > 0) {
+        const docRef = doc(this.db, "User", userId);
+        await updateDoc(docRef, { userBio });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateUserName({
+    userId,
+    userName,
+  }: {
+    userId: string;
+    userName: string;
+  }) {
+    try {
+      if (userId.length > 0) {
+        const docRef = doc(this.db, "User", userId);
+        await updateDoc(docRef, { userName });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async updateUserProfilePic({
+    userId,
+    userName,
+    picMetaData,
+  }: {
+    userId: string;
+    userName: string;
+    picMetaData: File;
+  }) {
+    try {
+      if (picMetaData != null) {
+        // get url
+        const url =
+          await uploadImageInServerService.putNewImageInFirebaseStorage({
+            postMetaData: picMetaData,
+            userName,
+            userId,
+          });
+
+        //update profile pic url in user
+        await updateDoc(doc(this.db, "User", userId), { profilePic: url });
+
+        return url;
       }
     } catch (error) {
       console.log(error);

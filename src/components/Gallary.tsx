@@ -31,7 +31,7 @@ function Gallary({
                   dispatch(setPostId({ postId: post.postId }));
                 }}
               >
-                <Image url={post.postUrl}></Image>
+                <Image url={post.postUrl} rounded={false}></Image>
               </div>
             </Link>
           ))

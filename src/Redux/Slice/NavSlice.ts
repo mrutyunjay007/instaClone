@@ -10,6 +10,8 @@ const initialState = {
   isAtHome: true,
   isCreatingPost: false,
   isInProfile: false,
+  isInNotification: false,
+  isSearching: false,
 };
 
 const navSlice = createSlice({
@@ -20,19 +22,46 @@ const navSlice = createSlice({
       state.isAtHome = true;
       state.isCreatingPost = false;
       state.isInProfile = false;
+      state.isInNotification = false;
+      state.isSearching = false;
     },
     CreatingPost(state) {
       state.isCreatingPost = true;
       state.isAtHome = false;
       state.isInProfile = false;
+      state.isInNotification = false;
+      state.isSearching = false;
     },
     InProfile(state) {
       state.isInProfile = true;
       state.isAtHome = false;
       state.isCreatingPost = false;
+      state.isInNotification = false;
+      state.isSearching = false;
+    },
+
+    Searching(state) {
+      state.isInProfile = false;
+      state.isAtHome = false;
+      state.isCreatingPost = false;
+      state.isInNotification = false;
+      state.isSearching = true;
+    },
+    CheckingNotifications(state) {
+      state.isInProfile = false;
+      state.isAtHome = false;
+      state.isCreatingPost = false;
+      state.isInNotification = true;
+      state.isSearching = false;
     },
   },
 });
 
-export const { AtHome, CreatingPost, InProfile } = navSlice.actions;
+export const {
+  AtHome,
+  CreatingPost,
+  InProfile,
+  Searching,
+  CheckingNotifications,
+} = navSlice.actions;
 export default navSlice.reducer;

@@ -2,21 +2,35 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { VscAccount } from "react-icons/vsc";
 import { FaUserCircle } from "react-icons/fa";
-
+import { RiSearchLine } from "react-icons/ri";
+import { RiHeart3Fill } from "react-icons/ri";
+import { RiSearchFill } from "react-icons/ri";
 import { RootState } from "../Redux/store";
-import { AtHome, CreatingPost, InProfile } from "../Redux/Slice/NavSlice";
+import {
+  AtHome,
+  CheckingNotifications,
+  CreatingPost,
+  InProfile,
+  Searching,
+} from "../Redux/Slice/NavSlice";
 import HomeIcon from "./SmallComponents/Icons/HomeIcon/HomeIcon";
 import HomeActIcon from "./SmallComponents/Icons/HomeIcon/HomeActIcon";
 import CreatePostIcon from "./SmallComponents/Icons/CreatePostIcon/CreatePostIcon";
 import CreatePostActIcon from "./SmallComponents/Icons/CreatePostIcon/CreatePostActIcon";
+import NotifiactionBell from "./SmallComponents/NotifiactionBell";
+import ToggleBtn from "./SmallComponents/ToggleBtn";
 
 function Nav() {
-  const { isAtHome, isCreatingPost, isInProfile } = useSelector(
-    (state: RootState) => state.Navigation
-  );
+  const {
+    isAtHome,
+    isCreatingPost,
+    isInProfile,
+    isInNotification,
+    isSearching,
+  } = useSelector((state: RootState) => state.Navigation);
   const dispatch = useDispatch();
   return (
-    <ul className=" flex md:flex-col dark:bg-background md:gap-5 justify-evenly items-center w-full bg-white">
+    <ul className=" flex md:flex-col dark:bg-background dark:text-color md:gap-10 justify-evenly md:items-center lg:pl-3 lg:items-start w-full bg-white">
       {/* Home */}
       <Link to="/">
         <li
@@ -34,7 +48,13 @@ function Nav() {
               <HomeActIcon></HomeActIcon>
             </span>
           )}
-          <span className=" font-bold text-lg lg:block hidden">Home</span>
+          <span
+            className={` ${
+              isAtHome ? "font-bold" : "font-normal"
+            }  text-lg lg:block  hidden`}
+          >
+            Home
+          </span>
         </li>
       </Link>
 
@@ -55,9 +75,76 @@ function Nav() {
               <CreatePostActIcon></CreatePostActIcon>
             </span>
           )}
-          <span className=" font-bold text-lg lg:block hidden">Create</span>
+          <span
+            className={` ${
+              isCreatingPost ? "font-bold" : "font-normal"
+            }  text-lg lg:block  hidden`}
+          >
+            Create
+          </span>
         </li>
       </Link>
+
+      {/* Search */}
+      <Link to="/search">
+        <li
+          className="flex gap-2 justify-center items-center cursor-pointer"
+          onClick={() => {
+            !isSearching && dispatch(Searching());
+          }}
+        >
+          {!isSearching ? (
+            <span>
+              <RiSearchLine className="size-6 dark:text-white cursor-pointer"></RiSearchLine>
+            </span>
+          ) : (
+            <span>
+              <RiSearchFill className="size-6 dark:text-white cursor-pointer" />
+            </span>
+          )}
+          <span
+            className={` ${
+              isSearching ? "font-bold" : "font-normal"
+            }  text-lg lg:block  hidden`}
+          >
+            Search
+          </span>
+        </li>
+      </Link>
+
+      {/* Notification */}
+      <Link to="/notification">
+        <li
+          className="flex gap-2 justify-center items-center cursor-pointer"
+          onClick={() => {
+            !isInNotification && dispatch(CheckingNotifications());
+          }}
+        >
+          {!isInNotification ? (
+            <span>
+              <NotifiactionBell></NotifiactionBell>
+            </span>
+          ) : (
+            <span>
+              <RiHeart3Fill className="size-6 dark:text-white" />
+            </span>
+          )}
+          <span
+            className={` ${
+              isInNotification ? "font-bold" : "font-normal"
+            }  text-lg lg:block  hidden`}
+          >
+            Notification
+          </span>
+        </li>
+      </Link>
+
+      {/* Dark Mode  */}
+      <li className="flex gap-2 justify-center items-center cursor-pointer">
+        <span>
+          <ToggleBtn></ToggleBtn>
+        </span>
+      </li>
 
       {/* profile */}
       <Link to="/userProfile">
@@ -76,7 +163,13 @@ function Nav() {
               <FaUserCircle className="w-6 h-6 dark:text-color" />
             </span>
           )}
-          <span className=" font-bold  text-lg lg:block  hidden">Profile</span>
+          <span
+            className={` ${
+              isInProfile ? "font-bold" : "font-normal"
+            }  text-lg lg:block  hidden`}
+          >
+            Profile
+          </span>
         </li>
       </Link>
     </ul>

@@ -13,15 +13,14 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-// import { Todo } from "../utility/TodoType";
+import { FirebaseStorage, getStorage } from "firebase/storage";
 import { app } from "./config";
-import { Todo } from "../utility/TodoType";
+import { uploadImageInServerService } from "./UploadImageInServerService";
 
 class PostService {
   db: Firestore;
   postCollectionRef: CollectionReference;
-  storage: Todo;
+  storage: FirebaseStorage;
 
   constructor() {
     this.db = getFirestore(app);
@@ -92,11 +91,12 @@ class PostService {
     try {
       if (postMetaData != null) {
         // get url
-        const url = await this.putNewPostInFirebaseStorage({
-          postMetaData,
-          userName,
-          userId,
-        });
+        const url =
+          await uploadImageInServerService.putNewImageInFirebaseStorage({
+            postMetaData,
+            userName,
+            userId,
+          });
 
         const postData = {
           userId,
@@ -137,29 +137,6 @@ class PostService {
           likeCount: 0,
         };
       }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  private async putNewPostInFirebaseStorage({
-    postMetaData,
-    userName,
-    userId,
-  }: {
-    postMetaData: File;
-    userName: string;
-    userId: string;
-  }) {
-    try {
-      const postRef = ref(
-        this.storage,
-        `${userName}-${userId}-posts/${postMetaData.name}`
-      );
-      const uploaded = await uploadBytes(postRef, postMetaData);
-      const url = await getDownloadURL(uploaded.ref);
-
-      return url;
     } catch (error) {
       console.log(error);
     }

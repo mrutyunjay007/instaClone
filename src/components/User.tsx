@@ -15,11 +15,11 @@ import BackBtn from "./SmallComponents/BackBtn";
 import GridIcon from "../assets/Grid.svg";
 import GridActIcon from "../assets/GridAct.svg";
 import SavedIcon from "../assets/savedPosts.svg";
-
 import { postService } from "../Firebase/postService";
 import SaveIcon from "./SmallComponents/Icons/SaveIcon/SaveIcon";
 import Spiner from "./SmallComponents/loaders/Spiner";
 
+import { FiEdit2 } from "react-icons/fi";
 import TopRightSetOfComponents from "./SmallComponents/TopRightSetOfComponents";
 
 function User({
@@ -128,7 +128,7 @@ function User({
       )}
 
       {/* Body */}
-      <div className=" md:mt-5 md:w-3/4  lg:w-[936px]">
+      <div className=" md:mt-5 md:px-5 w-full lg:w-[800px]">
         <div className="md:flex justify-evenly items-center ">
           <div className=" dark:text-color hidden md:block">
             <VscAccount className="w-[150px] h-[150px]"></VscAccount>
@@ -139,7 +139,13 @@ function User({
               <span className=" dark:text-color font-bold text-2xl ml-2  md:font-normal">
                 {userData.userName}
               </span>
-              <TopRightSetOfComponents></TopRightSetOfComponents>
+              <span className="flex gap-3">
+                <Link to={"/edit"}>
+                  <FiEdit2 className="size-6 cursor-pointer" />
+                </Link>
+
+                <TopRightSetOfComponents></TopRightSetOfComponents>
+              </span>
             </div>
             {/* profile componenet */}
             <div className="flex flex-col w-full">

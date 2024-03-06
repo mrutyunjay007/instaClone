@@ -18,7 +18,7 @@ function ToggleBtn() {
 
   return (
     <div
-      className=" cursor-pointer"
+      className=" md:flex gap-2 justify-center items-center cursor-pointer"
       onClick={() => {
         inputRef.current?.click();
       }}
@@ -51,6 +51,9 @@ function ToggleBtn() {
       </div>
       {/* )} */}
       {/* </div> */}
+      <span className={`text-lg lg:block  hidden dark:text-white`}>{`${
+        isChecked ? "Dark Mode" : "Light Mode"
+      }`}</span>
     </div>
   );
 }

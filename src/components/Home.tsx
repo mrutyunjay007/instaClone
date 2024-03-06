@@ -80,19 +80,19 @@ function Home() {
       <div className=" dark:bg-gray-700 w-full sticky  top-0  md:hidden">
         <TopBar></TopBar>
       </div>
-      <div className=" flex  justify-center px-10  items-center w-full md:w-[630px] lg:w-1/2">
-        {/* <div className=" px-10"> */}
-        <div className="w-full">
-          {isLoding ? (
-            <PostsLoader></PostsLoader>
-          ) : (
-            postList.map((post) => (
-              <Post key={post.postId} posts={{ ...post }}></Post>
-            ))
-          )}
-        </div>
-        {/* </div> */}
+      {/* <div className=" flex  justify-center items-center w-full"> */}
+      {/* <div className=" px-10"> */}
+      <div className=" w-full px-5 md:px-0 md:w-[468px]">
+        {isLoding ? (
+          <PostsLoader></PostsLoader>
+        ) : (
+          postList.map((post) => (
+            <Post key={post.postId} posts={{ ...post }}></Post>
+          ))
+        )}
       </div>
+      {/* </div> */}
+      {/* </div> */}
     </>
   );
 }

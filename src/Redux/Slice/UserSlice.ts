@@ -56,6 +56,15 @@ const userSlice = createSlice({
     updateUserIdName(state, actions: PayloadAction<string>) {
       state.userData.userIdName = actions.payload;
     },
+    EditingUserName(state, actions: PayloadAction<string>) {
+      state.userData.userName = actions.payload;
+    },
+    EditingBio(state, actions: PayloadAction<string>) {
+      state.userData.userBio = actions.payload;
+    },
+    UpdateProfilePicUlr(state, actions: PayloadAction<string>) {
+      state.userData.profilePic = actions.payload;
+    },
   },
 });
 
@@ -66,4 +75,7 @@ export const {
   upDateUserFollowingCount,
   upadateNumberOfPost,
   updateUserIdName,
+  EditingUserName,
+  EditingBio,
+  UpdateProfilePicUlr,
 } = userSlice.actions;

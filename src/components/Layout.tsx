@@ -9,16 +9,18 @@ function Layout() {
   //get all notifications
   useNotification();
   return (
-    <div className=" md:flex justify-center dark:bg-background ">
-      <Outlet></Outlet>
-
-      <div className=" hidden  dark:bg-background md:block fixed left-0">
+    <div className=" md:flex  dark:bg-background ">
+      <span className=" hidden  dark:bg-background md:block fixed ">
         <SideBar></SideBar>
-      </div>
+      </span>
 
-      <div className="md:hidden dark:bg-background">
+      <span className="flex-1 w-full md:pl-[72px] lg:pl-[244px] flex flex-col items-center">
+        <Outlet></Outlet>
+      </span>
+
+      <span className="md:hidden dark:bg-background ">
         <FooterNav></FooterNav>
-      </div>
+      </span>
     </div>
   );
 }

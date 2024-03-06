@@ -25,7 +25,7 @@ function Post({
   const dispatch = useDispatch();
 
   return (
-    <div className=" dark:bg-background flex flex-col w-full md:w-[468px] gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
+    <div className=" dark:bg-background flex flex-col w-full  gap-2 mt-2 bg-white mb-4 border-b-2 border-s-slate-100 ">
       {/* User Info */}
 
       <Link to={userId == authUserId ? "/userProfile" : "/othersProfile"}>
@@ -54,7 +54,7 @@ function Post({
       </Link>
       {/* Posted Image */}
       <div className="w-full aspect-square">
-        <Image url={postUrl}></Image>
+        <Image url={postUrl} rounded={false}></Image>
       </div>
       {/* Responses */}
       <div className="w-full">

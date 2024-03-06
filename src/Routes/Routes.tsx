@@ -22,6 +22,7 @@ const Notification = lazy(
 );
 const Search = lazy(() => import("../components/Search/Search"));
 const ShowSinglePost = lazy(() => import("../components/ShowSinglePost"));
+const EditProfile = lazy(() => import("../components/Profile/EditProfile"));
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -114,6 +115,14 @@ export const router = createBrowserRouter(
         element={
           <Suspense>
             <Search></Search>
+          </Suspense>
+        }
+      />
+      <Route
+        path="edit"
+        element={
+          <Suspense>
+            <EditProfile></EditProfile>
           </Suspense>
         }
       />
