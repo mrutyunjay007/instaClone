@@ -126,14 +126,14 @@ function User({
       )}
 
       {/* Body */}
-      <div className=" md:mt-5 md:px-5 w-full lg:w-[800px]">
+      <div className=" md:mt-5 md:px-5 md:pb-0 pb-[5.1rem]  w-full lg:w-[800px]">
         <div className="md:flex justify-evenly items-center ">
           <div className=" w-48 h-48 dark:text-color hidden md:block">
             <ProfilePic w={"full"} h={"full"}></ProfilePic>
           </div>
           <div>
             {/* User Name */}
-            <div className="  dark:bg-background sticky top-0 flex justify-between items-center w-full h-[9vh] bg-white border-b-2 border-s-slate-100 md:border-none">
+            <div className="  dark:bg-background sticky top-0 flex justify-between items-center w-full h-[5.1rem] bg-white border-b-2 border-s-slate-100 md:border-none">
               <span className=" dark:text-color font-bold text-2xl ml-2  md:font-normal">
                 {userData.userName}
               </span>

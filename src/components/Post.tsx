@@ -1,7 +1,4 @@
-// import React from 'react'
-import { VscAccount } from "react-icons/vsc";
 import Engagments from "./Engagments";
-// import post from "../assets/js-mock-up.png.png";
 import { IPost } from "../Redux/Slice/CurrentPostSlice";
 import { profileService } from "../Firebase/profileService";
 import { useDispatch, useSelector } from "react-redux";

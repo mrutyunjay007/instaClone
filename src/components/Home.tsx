@@ -21,6 +21,11 @@ function Home() {
 
   const [isLoding, setIsLoding] = useState(true);
 
+  // activate home icon when back from other pages
+  useEffect(() => {
+    dispatch(AtHome());
+  }, []);
+
   // Retrive all Post
   useEffect(() => {
     (async () => {

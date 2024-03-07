@@ -2,19 +2,23 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface IUser {
   userName: string;
+  userIdName: string;
   userId: string;
   userBio: string;
   profilePic: string;
   follower: number;
   following: number;
+  postNumber: number;
 }
 const emptyUserData: IUser = {
   userName: "",
+  userIdName: "",
   userId: "",
   userBio: "",
   profilePic: "",
   follower: 0,
   following: 0,
+  postNumber: 0,
 };
 
 const initialState = {

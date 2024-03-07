@@ -24,17 +24,17 @@ function ShowSinglePost() {
   }, [postId]);
 
   return (
-    <div>
-      <div className="  dark:bg-background bg-white w-screen h-[9vh] sticky flex justify-center items-center gap-3 top-0  border-b-2 border-s-slate-100 ">
+    <>
+      <div className="  dark:bg-background bg-white sticky w-full h-[5.1rem] flex justify-start items-center gap-3 top-0  border-b-2 md:border-none border-s-slate-100 ">
         <BackBtn></BackBtn>
-        <span className=" dark:text-color font-bold text-2xl cursor-pointer">
+        <span className=" dark:text-color font-bold text-2xl ml-2  md:font-normal">
           Post
         </span>
       </div>
-      <div className=" flex w-full  justify-center  items-center ">
+      <div className="  w-full px-5 md:px-0 md:w-[468px] pb-[5.1rem] md:pb-0 ">
         {post && <Post posts={post}></Post>}
       </div>
-    </div>
+    </>
   );
 }
 

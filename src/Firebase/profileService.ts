@@ -214,11 +214,13 @@ class ProfileService {
       if (docSnap.exists()) {
         return {
           userId: docSnap.data().userId,
+          userIdName: docSnap.data().userIdName,
           userName: docSnap.data().userName,
           userBio: docSnap.data().userBio,
           profilePic: docSnap.data().profilePic,
           follower: docSnap.data().followerNumber,
           following: docSnap.data().followingNumber,
+          postNumber: docSnap.data().postNumber,
         };
       }
       return null;

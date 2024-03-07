@@ -8,7 +8,7 @@ function BackBtn() {
   const navigate = useNavigate();
   return (
     <span
-      className=" absolute md:left-[80px] lg:left-[250px] cursor-pointer pl-2"
+      className=" md:left-[80px] lg:left-[250px] cursor-pointer pl-2"
       onClick={() => {
         navigate(-1);
       }}
