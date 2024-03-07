@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { VscAccount } from "react-icons/vsc";
-import { FaUserCircle } from "react-icons/fa";
+
 import { RiSearchLine } from "react-icons/ri";
 import { RiHeart3Fill } from "react-icons/ri";
 import { RiSearchFill } from "react-icons/ri";
@@ -19,6 +18,7 @@ import CreatePostIcon from "./SmallComponents/Icons/CreatePostIcon/CreatePostIco
 import CreatePostActIcon from "./SmallComponents/Icons/CreatePostIcon/CreatePostActIcon";
 import NotifiactionBell from "./SmallComponents/NotifiactionBell";
 import ToggleBtn from "./SmallComponents/ToggleBtn";
+import ProfilePic from "./SmallComponents/ProfilePic";
 
 function Nav() {
   const {
@@ -86,7 +86,7 @@ function Nav() {
       </Link>
 
       {/* Search */}
-      <Link to="/search">
+      <Link to="/search" className="hidden md:block">
         <li
           className="flex gap-2 justify-center items-center cursor-pointer"
           onClick={() => {
@@ -113,7 +113,7 @@ function Nav() {
       </Link>
 
       {/* Notification */}
-      <Link to="/notification">
+      <Link to="/notification" className="hidden md:block">
         <li
           className="flex gap-2 justify-center items-center cursor-pointer"
           onClick={() => {
@@ -140,7 +140,7 @@ function Nav() {
       </Link>
 
       {/* Dark Mode  */}
-      <li className="flex gap-2 justify-center items-center cursor-pointer">
+      <li className="hidden md:flex gap-2 justify-center items-center cursor-pointer">
         <span>
           <ToggleBtn></ToggleBtn>
         </span>
@@ -156,11 +156,11 @@ function Nav() {
         >
           {!isInProfile ? (
             <span>
-              <VscAccount className="w-6 h-6 dark:text-color" />
+              <ProfilePic w={6} h={6}></ProfilePic>
             </span>
           ) : (
-            <span>
-              <FaUserCircle className="w-6 h-6 dark:text-color" />
+            <span className="border-2  rounded-full border-black">
+              <ProfilePic w={6} h={6}></ProfilePic>
             </span>
           )}
           <span

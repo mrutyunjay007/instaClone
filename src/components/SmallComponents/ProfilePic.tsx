@@ -7,11 +7,12 @@ function ProfilePic({ w, h }: { w: number | string; h: number | string }) {
   const userProfilePicture = useSelector(
     (state: RootState) => state.UserInfos.userData.profilePic
   );
+  // console.log(w);
 
   return (
     <>
       {userProfilePicture.length === 0 ? (
-        <VscAccount className={`dark:text-color w-${w} h-${h}`} />
+        <VscAccount className={`dark:text-color  w-${w} h-${h}`} />
       ) : (
         <div className={`rounded-full w-${w} h-${h}`}>
           <Image url={userProfilePicture} rounded={true}></Image>

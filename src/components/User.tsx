@@ -1,6 +1,3 @@
-// import React from 'react'
-import { VscAccount } from "react-icons/vsc";
-
 import Gallary from "./Gallary";
 import { IUser, upDateUserFollowingCount } from "../Redux/Slice/UserSlice";
 import { Link } from "react-router-dom";
@@ -21,6 +18,7 @@ import Spiner from "./SmallComponents/loaders/Spiner";
 
 import { FiEdit2 } from "react-icons/fi";
 import TopRightSetOfComponents from "./SmallComponents/TopRightSetOfComponents";
+import ProfilePic from "./SmallComponents/ProfilePic";
 
 function User({
   userData,
@@ -130,8 +128,8 @@ function User({
       {/* Body */}
       <div className=" md:mt-5 md:px-5 w-full lg:w-[800px]">
         <div className="md:flex justify-evenly items-center ">
-          <div className=" dark:text-color hidden md:block">
-            <VscAccount className="w-[150px] h-[150px]"></VscAccount>
+          <div className=" w-48 h-48 dark:text-color hidden md:block">
+            <ProfilePic w={"full"} h={"full"}></ProfilePic>
           </div>
           <div>
             {/* User Name */}
@@ -156,9 +154,8 @@ function User({
                 {/* Left side */}
 
                 {/* user pic & name */}
-                <div className="  flex justify-start items-center md:hidden">
-                  <VscAccount className=" dark:text-color w-[77px] h-[77px]" />
-                  {/* <img className=" rounded w-[77px] h-[77px]" src="" alt="" /> */}
+                <div className="w-32 h-32  flex justify-start items-center md:hidden">
+                  <ProfilePic w={"full"} h={"full"}></ProfilePic>
                 </div>
 
                 {/* right side */}
@@ -215,7 +212,9 @@ function User({
               {/* Down section */}
 
               {/* Bio */}
-              <div className="w-full  px-4">{userData.userBio}</div>
+              <div className="w-full whitespace-pre-line font-bold px-4 ">
+                {userData.userBio}
+              </div>
             </div>
 
             {/* Follow Button */}

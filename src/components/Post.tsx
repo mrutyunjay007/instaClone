@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addOthersinfo } from "../Redux/Slice/OthersSlice";
 import { Link } from "react-router-dom";
 import { RootState } from "../Redux/store";
-// import { useState } from "react";
+import ProfilePic from "./SmallComponents/ProfilePic";
 import Image from "./SmallComponents/Image";
 
 function Post({
@@ -46,8 +46,8 @@ function Post({
             }
           }}
         >
-          <span className="ml-2 dark:text-color">
-            <VscAccount className="w-8 h-8" />
+          <span className="size-8 ml-2 dark:text-color">
+            <ProfilePic w={"full"} h={"full"}></ProfilePic>
           </span>
           <span className="dark:text-color  font-bold">{userName}</span>
         </div>
