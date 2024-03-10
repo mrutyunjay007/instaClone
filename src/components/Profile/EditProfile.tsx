@@ -1,5 +1,3 @@
-import { RiArrowLeftSLine } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
 import EditBio from "./EditBio";
 import EditUserName from "./EditUserName";
 import ProfilePic from "../SmallComponents/ProfilePic";
@@ -10,26 +8,22 @@ import { RootState } from "../../Redux/store";
 import { authService } from "../../Firebase/authService";
 import { UpdateProfilePicUlr } from "../../Redux/Slice/UserSlice";
 import Spiner from "../SmallComponents/loaders/Spiner";
+import BackBtn from "../SmallComponents/BackBtn";
 
 function EditProfile() {
-  const { userName, userId } = useSelector(
+  const { userName, userId, profilePic } = useSelector(
     (state: RootState) => state.UserInfos.userData
   );
   const dispatch = useDispatch();
   const [Load, setLoad] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigater = useNavigate();
 
   return (
     <>
       {/* TopBar */}
       <div className="  dark:bg-background sticky top-0 flex  gap-2 justify-start items-center w-full h-[9vh] bg-white border-b-2 border-s-slate-100 md:border-none">
-        <RiArrowLeftSLine
-          className="size-7 cursor-pointer dark:text-white"
-          onClick={() => {
-            navigater(-1);
-          }}
-        />
+        <BackBtn></BackBtn>
+
         <span className=" dark:text-color font-bold text-2xl ml-2  md:font-normal">
           Edit
         </span>
@@ -43,7 +37,7 @@ function EditProfile() {
             {Load ? (
               <Spiner w={10} h={10} />
             ) : (
-              <ProfilePic w={"full"} h={"full"}></ProfilePic>
+              <ProfilePic url={profilePic} w={"full"} h={"full"}></ProfilePic>
             )}
           </div>
 

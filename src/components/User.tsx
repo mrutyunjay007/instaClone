@@ -119,27 +119,31 @@ function User({
   return (
     <>
       {/* TopBar */}
-      {!userProfile && (
-        <div className=" md:hidden block sticky top-0 ">
-          <BackBtn></BackBtn>
-        </div>
-      )}
 
       {/* Body */}
       <div className=" md:mt-5 md:px-5 md:pb-0 pb-[5.1rem]  w-full lg:w-[800px]">
         <div className="md:flex justify-evenly items-center ">
           <div className=" w-48 h-48 dark:text-color hidden md:block">
-            <ProfilePic w={"full"} h={"full"}></ProfilePic>
+            <ProfilePic
+              url={userData.profilePic}
+              w={"full"}
+              h={"full"}
+            ></ProfilePic>
           </div>
           <div>
             {/* User Name */}
             <div className="  dark:bg-background sticky top-0 flex justify-between items-center w-full h-[5.1rem] bg-white border-b-2 border-s-slate-100 md:border-none">
-              <span className=" dark:text-color font-bold text-2xl ml-2  md:font-normal">
-                {userData.userName}
+              <span className=" flex ml-2 justify-center items-center dark:text-color  gap-3 font-bold text-2xl  md:font-normal">
+                {!userProfile && <BackBtn></BackBtn>}
+                <span>{userData.userName}</span>
               </span>
               <span className="flex gap-3">
                 <Link to={"/edit"}>
-                  <FiEdit2 className="size-6 cursor-pointer" />
+                  <FiEdit2
+                    className={`${
+                      userProfile ? "block" : "hidden"
+                    } size-6 cursor-pointer`}
+                  />
                 </Link>
 
                 <TopRightSetOfComponents></TopRightSetOfComponents>
@@ -150,23 +154,33 @@ function User({
               {/* Top section */}
 
               {/* profile info */}
-              <div className="flex w-full p-5 gap-6 md:gap-0">
+              <div className="flex w-full p-5 gap-3 md:gap-0">
                 {/* Left side */}
 
                 {/* user pic & name */}
-                <div className="w-32 h-32  flex justify-start items-center md:hidden">
-                  <ProfilePic w={"full"} h={"full"}></ProfilePic>
+                <div className="w-20 h-20  flex flex-col justify-start items-center md:hidden">
+                  <ProfilePic
+                    url={userData.profilePic}
+                    w={"full"}
+                    h={"full"}
+                  ></ProfilePic>
+                  <span className="text-sm  text-slate-500">
+                    {" "}
+                    {`@ ${userData.userIdName}`}
+                  </span>
                 </div>
 
                 {/* right side */}
 
                 {/* follow and post Nums */}
-                <div className=" dark:text-color flex-1 flex justify-evenly md:justify-between md:gap-3 lg:gap-3 items-center ">
-                  <div className=" flex flex-col md:flex-row md:gap-1 items-center">
-                    <span className="font-bold  text-xl">
+                <div className=" dark:text-color flex-1 flex justify-evenly md:justify-between gap-3 items-center ">
+                  <div className=" flex flex-col md:flex-row  md:gap-1 items-center">
+                    <span className="font-bold text-lg md:text-xl">
                       {userData.postNumber}
                     </span>
-                    <span className=" font-normal text-lg">Posts</span>
+                    <span className=" font-normal text-base md:text-lg">
+                      posts
+                    </span>
                   </div>
 
                   <Link to="/followers">
@@ -181,10 +195,12 @@ function User({
                         );
                       }}
                     >
-                      <span className="font-bold  text-xl">
+                      <span className="font-bold  text-lg md:text-xl">
                         {userData.follower}
                       </span>
-                      <span className=" font-normal text-lg">Follower</span>
+                      <span className=" font-normal text-base md:text-lg">
+                        follower
+                      </span>
                     </div>
                   </Link>
 
@@ -200,10 +216,12 @@ function User({
                         );
                       }}
                     >
-                      <span className="font-bold  text-xl">
+                      <span className="font-bold md:text-xl  text-lg">
                         {userData.following}
                       </span>
-                      <span className=" font-normal text-lg">Following</span>
+                      <span className=" font-normal text-base md:text-lg">
+                        following
+                      </span>
                     </div>
                   </Link>
                 </div>
@@ -222,11 +240,21 @@ function User({
               className={`px-3 ${userProfile ? "hidden" : "block"}`}
               onClick={handelFollowingSatus}
             >
-              <div className=" flex justify-center rounded-md items-center p-5 mt-4 w-full h-8 bg-[#0095f6]  cursor-pointer">
+              <div
+                className={` flex justify-center rounded-md items-center p-5 mt-4 w-full h-8 bg-[#0095f6]  cursor-pointer ${
+                  isFollowing
+                    ? "bg-white border-2 border-slate-400"
+                    : "border-2 border-[#0095f6] "
+                }`}
+              >
                 {isFollowLoader ? (
                   <Spiner w={8} h={8}></Spiner>
                 ) : (
-                  <span className="flex justify-center items-center h-full w-[90%] rounded-[10px]  text-white font-bold">
+                  <span
+                    className={`flex justify-center items-center h-full w-[90%] rounded-[10px]  ${
+                      !isFollowing ? " text-white" : "text-black"
+                    } font-bold`}
+                  >
                     {isFollowing ? "Following" : "Follow"}
                   </span>
                 )}

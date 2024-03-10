@@ -28,7 +28,7 @@ function Connection({
   const [isFollowingStatus, setIsFollowingStatus] = useState(isFollowing);
 
   return (
-    <div className="flex justify-between items-center px-4">
+    <div className="flex mt-3 p-5 justify-between drop-shadow-lg bg-white items-center px-4">
       <Link to="/othersProfile">
         <div
           className="flex-1 flex justify-start items-center gap-3 my-4 cursor-pointer"
@@ -57,12 +57,12 @@ function Connection({
 
       {/* follow un-follow btn */}
       <div
-        className={` flex justify-center items-center basis-1/4 ${
+        className={` flex justify-center items-center w-32 h-12 ${
           likeCount ? "hidden" : "block"
         } ${
           !isFollowingStatus
             ? " bg-[#0095f6]"
-            : "bg-white border-2  border-s-slate-100"
+            : "bg-white border-2  border-slate-300"
         }  rounded-md p-2 text-lg font-bold cursor-pointer`}
         onClick={() => {
           profileService.upDateFollowingFromFollowList({

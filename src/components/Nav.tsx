@@ -28,6 +28,9 @@ function Nav() {
     isInNotification,
     isSearching,
   } = useSelector((state: RootState) => state.Navigation);
+  const profilePic = useSelector(
+    (state: RootState) => state.UserInfos.userData.profilePic
+  );
   const dispatch = useDispatch();
   return (
     <ul className=" flex md:flex-col dark:bg-background dark:text-color md:gap-10 justify-evenly md:items-center lg:pl-3 lg:items-start w-full bg-white">
@@ -156,11 +159,11 @@ function Nav() {
         >
           {!isInProfile ? (
             <span>
-              <ProfilePic w={6} h={6}></ProfilePic>
+              <ProfilePic url={profilePic} w={6} h={6}></ProfilePic>
             </span>
           ) : (
             <span className="border-2  rounded-full border-black">
-              <ProfilePic w={6} h={6}></ProfilePic>
+              <ProfilePic url={profilePic} w={6} h={6}></ProfilePic>
             </span>
           )}
           <span

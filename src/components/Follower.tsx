@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { profileService } from "../Firebase/profileService";
 import { TConnection } from "../Redux/Slice/FollowSlice";
 import BackBtn from "./SmallComponents/BackBtn";
+import FollowLoader from "./SmallComponents/loaders/FollowLoader";
 
 function Follower() {
   const { userId } = useSelector((state: RootState) => state.CurrentUserInfo);
@@ -26,16 +27,18 @@ function Follower() {
   }, []);
 
   return (
-    <div className="w-full ">
-      <div className=" w-full h-[9vh] sticky top-0 flex justify-center items-center  border-b-2 border-s-slate-100">
+    <div className="w-full pb-[5.1rem] md:pb-0 ">
+      <div className="  dark:bg-background  sticky top-0 flex  gap-2 justify-start items-center w-full h-[5.1rem] bg-white border-b-2 border-s-slate-100 md:border-none">
         <BackBtn></BackBtn>
 
-        <span className=" font-bold text-2xl"> Follower</span>
+        <span className=" dark:text-color font-bold text-2xl ml-2  md:font-normal">
+          Follower
+        </span>
       </div>
       <div className=" mt-2 flex justify-center">
-        <div className="w-full md:w-3/4  lg:w-1/2">
+        <div className="w-full md:w-3/4 px-5 md:px-0 lg:w-1/2">
           {loding ? (
-            <div>Loding...</div>
+            <FollowLoader></FollowLoader>
           ) : (
             followersList.map((data) => (
               <Connection

@@ -4,10 +4,12 @@ import { RootState } from "../../Redux/store";
 import { lightDarkMode } from "../../Redux/Slice/DarkMOdeSlice";
 import { FiSun } from "react-icons/fi";
 import { FiMoon } from "react-icons/fi";
+import { DarkLigth } from "../../Redux/Slice/NavSlice";
 
 function ToggleBtn() {
   const inputRef = useRef<HTMLInputElement>(null);
   const theme = useSelector((state: RootState) => state.DarkModeEnable.theme);
+  const dark = useSelector((state: RootState) => state.Navigation.DarkMode);
   const dispatch = useDispatch();
   const [isChecked, setIsChecked] = useState(false);
 
@@ -31,19 +33,20 @@ function ToggleBtn() {
         onChange={() => {
           dispatch(lightDarkMode({ isChecked: !isChecked }));
           setIsChecked(!isChecked);
+          dispatch(DarkLigth(!isChecked));
         }}
       />
 
       {/* {!isChecked ? ( */}
       <div
-        className={`${!isChecked ? "block" : "hidden"} ${
-          isChecked && "animate-ping"
+        className={`${!dark ? "block" : "hidden"} ${
+          dark && "animate-ping"
         } duration-500`}
       >
         <FiSun className="w-6 h-6"></FiSun>
       </div>
       {/* ) : ( */}
-      <div className={`${isChecked ? "block" : "hidden"}`}>
+      <div className={`${dark ? "block" : "hidden"}`}>
         <FiMoon
           className="w-6 h-6  text-slate-100 "
           // style={{ color: "white" }}
@@ -52,7 +55,7 @@ function ToggleBtn() {
       {/* )} */}
       {/* </div> */}
       <span className={`text-lg lg:block  hidden dark:text-white`}>{`${
-        isChecked ? "Dark Mode" : "Light Mode"
+        dark ? "Dark Mode" : "Light Mode"
       }`}</span>
     </div>
   );

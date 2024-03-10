@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import SingleNotification from "./SingleNotification";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { RootState } from "../../Redux/store";
-import { InProfile } from "../../Redux/Slice/NavSlice";
+import { CheckingNotifications, InProfile } from "../../Redux/Slice/NavSlice";
+import { useEffect } from "react";
 
 function NotificationBody() {
   const navigater = useNavigate();
@@ -11,6 +12,11 @@ function NotificationBody() {
     (state: RootState) => state.NotificationInfo.notifications
   );
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(CheckingNotifications());
+  }, []);
+
   return (
     <>
       {/* TopBar */}

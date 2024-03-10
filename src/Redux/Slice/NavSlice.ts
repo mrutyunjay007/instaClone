@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 // interface INav {
 //   isAtHome: boolean;
@@ -12,6 +12,7 @@ const initialState = {
   isInProfile: false,
   isInNotification: false,
   isSearching: false,
+  DarkMode: false,
 };
 
 const navSlice = createSlice({
@@ -54,6 +55,9 @@ const navSlice = createSlice({
       state.isInNotification = true;
       state.isSearching = false;
     },
+    DarkLigth(state, actions: PayloadAction<boolean>) {
+      state.DarkMode = actions.payload;
+    },
   },
 });
 
@@ -63,5 +67,6 @@ export const {
   InProfile,
   Searching,
   CheckingNotifications,
+  DarkLigth,
 } = navSlice.actions;
 export default navSlice.reducer;

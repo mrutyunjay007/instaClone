@@ -6,12 +6,19 @@ import { searchUserIdName } from "../../Firebase/SearchUserIdNameService";
 import { IUser } from "../../Redux/Slice/UserSlice";
 import SearchResult from "./SearchResult";
 import SearchItemLoader from "../SmallComponents/loaders/SearchItemLoader";
+import { useDispatch } from "react-redux";
+import { Searching } from "../../Redux/Slice/NavSlice";
 
 function Search() {
   const [search, setSearch] = useState("");
   const navigater = useNavigate();
   const [user, setUser] = useState<IUser | null>(null);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(Searching());
+  }, []);
 
   useEffect(() => {
     if (search.length === 0) {

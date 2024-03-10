@@ -44,7 +44,7 @@ function Post({
           }}
         >
           <span className="size-8 ml-2 dark:text-color">
-            <ProfilePic w={"full"} h={"full"}></ProfilePic>
+            <ProfilePic url={profilePic} w={"full"} h={"full"}></ProfilePic>
           </span>
           <span className="dark:text-color  font-bold">{userName}</span>
         </div>
