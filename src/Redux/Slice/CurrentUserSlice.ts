@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   userName: "",
   userId: "",
+  profilePic: "",
 };
 
 const currentUserSlice = createSlice({
@@ -11,10 +12,15 @@ const currentUserSlice = createSlice({
   reducers: {
     setCurrentUser(
       state,
-      actoin: PayloadAction<{ userName: string; userId: string }>
+      actoin: PayloadAction<{
+        userName: string;
+        userId: string;
+        profilePic: string;
+      }>
     ) {
       state.userId = actoin.payload.userId;
       state.userName = actoin.payload.userName;
+      state.profilePic = actoin.payload.profilePic;
     },
   },
 });

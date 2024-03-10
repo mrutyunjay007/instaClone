@@ -43,23 +43,6 @@ function Home() {
       }
     })();
   }, []);
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       notificationService.getAllNotificationsFirstTime(
-  //         userId,
-  //         (notificationData: INotificationData, notificationId: string) => {
-  //           //push in notificatin-state
-  //           dispatch(
-  //             getAllNotification({ ...notificationData, id: notificationId })
-  //           );
-  //         }
-  //       );
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, []);
 
   // Add new Post
   useEffect(() => {

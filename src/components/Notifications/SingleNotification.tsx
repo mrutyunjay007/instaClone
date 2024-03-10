@@ -58,7 +58,7 @@ function SingleNotification({
 
   return (
     <div
-      className=" bg-white dark:bg-background cursor-pointer mt-2 flex gap-2 items-center p-5 px-6 justify-start font-semibold w-3/4  drop-shadow-xl rounded-lg "
+      className="flex mt-3 p-5 justify-start gap-3 font-semibold cursor-pointer w-full border-2 border-slate-200 rounded-xl bg-white items-center px-4"
       onClick={() => {
         notificationHandeler();
         dispatch(deleteSingleNotification(id));

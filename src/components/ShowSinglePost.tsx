@@ -13,6 +13,8 @@ function ShowSinglePost() {
 
   const [post, setPost] = useState<IPost>();
 
+  console.log(postId);
+
   useEffect(() => {
     postId.length > 0 &&
       (async () => {

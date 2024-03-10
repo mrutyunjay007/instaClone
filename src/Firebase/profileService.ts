@@ -37,7 +37,7 @@ interface IFollowFollowing {
 }
 
 class ProfileService {
-  private db: Firestore;
+  db: Firestore;
   private userCollectionRef: CollectionReference;
 
   constructor() {
@@ -161,18 +161,34 @@ class ProfileService {
       const q = query(collectionRef, where("follower", "==", true));
       const querySnapshots = await getDocs(q);
 
-      const querySnapshot = querySnapshots.docs.map((doc) => {
-        const { userName, userId, userProfilePic, follower, following } =
-          doc.data();
-        return {
-          userName,
-          userId,
-          profilePic: userProfilePic,
-          isFollower: follower,
-          isFollowing: following,
-        };
-      });
-      return querySnapshot;
+      const querySnapshot = await Promise.all(
+        querySnapshots.docs.map(async (docs) => {
+          const { userId, follower, following } = docs.data();
+          const docRef = doc(this.db, "User", userId);
+          const user = await getDoc(docRef);
+
+          if (user.exists()) {
+            const userInfoData: {
+              userName: string;
+              userId: string;
+              profilePic: string;
+              isFollower: boolean;
+              isFollowing: boolean;
+            } = {
+              userName: user.data().userName,
+              userId,
+              profilePic: user.data().profilePic,
+              isFollower: follower,
+              isFollowing: following,
+            };
+
+            return userInfoData;
+          }
+          return null;
+        })
+      );
+
+      return querySnapshot.filter((item) => item !== null);
     } catch (error) {
       console.log(error);
     }
@@ -189,18 +205,34 @@ class ProfileService {
       const q = query(collectionRef, where("following", "==", true));
       const querySnapshots = await getDocs(q);
 
-      const querySnapshot = querySnapshots.docs.map((doc) => {
-        const { userName, userId, userProfilePic, follower, following } =
-          doc.data();
-        return {
-          userName,
-          userId,
-          profilePic: userProfilePic,
-          isFollower: follower,
-          isFollowing: following,
-        };
-      });
-      return querySnapshot;
+      const querySnapshot = await Promise.all(
+        querySnapshots.docs.map(async (docs) => {
+          const { userId, follower, following } = docs.data();
+          const docRef = doc(this.db, "User", userId);
+          const user = await getDoc(docRef);
+
+          if (user.exists()) {
+            const userInfoData: {
+              userName: string;
+              userId: string;
+              profilePic: string;
+              isFollower: boolean;
+              isFollowing: boolean;
+            } = {
+              userName: user.data().userName,
+              userId,
+              profilePic: user.data().profilePic,
+              isFollower: follower,
+              isFollowing: following,
+            };
+
+            return userInfoData;
+          }
+          return null;
+        })
+      );
+
+      return querySnapshot.filter((item) => item !== null);
     } catch (error) {
       console.log(error);
     }
@@ -208,7 +240,7 @@ class ProfileService {
 
   async otherUserProfile({ userId }: ID) {
     try {
-      const docRef = doc(this.userCollectionRef, userId);
+      const docRef = doc(this.db, "User", userId);
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -231,7 +263,7 @@ class ProfileService {
 
   async getUploadedPosts({ userId }: ID) {
     try {
-      const collectionRef = collection(this.userCollectionRef, userId, "post");
+      const collectionRef = collection(this.db, "User", userId, "post");
 
       const posts = await getDocs(collectionRef);
 

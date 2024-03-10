@@ -6,5 +6,5 @@ export interface IConnection {
   isFollowing: boolean;
 }
 
-export type TConnection = IConnection[];
+export type TConnection = (IConnection | null)[];
 // const initialState = new Array<IConnection>();

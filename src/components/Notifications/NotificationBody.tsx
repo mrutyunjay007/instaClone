@@ -33,7 +33,7 @@ function NotificationBody() {
         </span>
         {/* BackBtn */}
       </div>
-      <div className="flex flex-col pb-[5.1rem] md:pb-[5.1rem] justify-center items-center w-full">
+      <div className="flex px-4 md:w-[668px] flex-col pb-[5.1rem] md:pb-[5.1rem] justify-center items-center w-full">
         {notificatins.map((notification) => (
           <SingleNotification
             key={notification.id}

@@ -53,9 +53,11 @@ class PostService {
 
   async showSinglePost({ postId }: { postId: string }) {
     try {
-      const docRef = doc(this.postCollectionRef, postId);
+      const docRef = doc(this.db, "Posts", postId);
       const post = await getDoc(docRef);
       if (post.exists()) {
+        console.log(post.data());
+
         return {
           postId,
           userId: post.data().userId,

@@ -1,5 +1,4 @@
 // import React from 'react'
-import { VscAccount } from "react-icons/vsc";
 import { IConnection } from "../Redux/Slice/FollowSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
@@ -8,9 +7,10 @@ import { profileService } from "../Firebase/profileService";
 import { upDateUserFollowingCount } from "../Redux/Slice/UserSlice";
 import { addOthersinfo } from "../Redux/Slice/OthersSlice";
 import { Link } from "react-router-dom";
+import ProfilePic from "./SmallComponents/ProfilePic";
 
 function Connection({
-  followersData: { userId, userName, isFollowing },
+  followersData: { userId, userName, isFollowing, profilePic },
   likeCount,
 }: {
   followersData: IConnection;
@@ -28,7 +28,7 @@ function Connection({
   const [isFollowingStatus, setIsFollowingStatus] = useState(isFollowing);
 
   return (
-    <div className="flex mt-3 p-5 justify-between drop-shadow-lg bg-white items-center px-4">
+    <div className="flex mt-3  w-full p-5 justify-between  border-2 border-slate-200 rounded-xl bg-white items-center px-4">
       <Link to="/othersProfile">
         <div
           className="flex-1 flex justify-start items-center gap-3 my-4 cursor-pointer"
@@ -45,8 +45,8 @@ function Connection({
             }
           }}
         >
-          <div className=" dark:text-color">
-            <VscAccount className="w-8 h-8"></VscAccount>{" "}
+          <div className=" size-8 dark:text-color">
+            <ProfilePic url={profilePic} w={"full"} h={"full"}></ProfilePic>
           </div>
 
           <div className=" text-lg font-bold dark:text-color">

@@ -44,7 +44,7 @@ function User({
 
   // other-user follow to current-user or not
   useEffect(() => {
-    authUser.userId != userData.userId &&
+    authUser.userId !== userData.userId &&
       (async (userId, authUserId) => {
         try {
           const inFollowList = await profileService.isInFollowList({
@@ -64,7 +64,7 @@ function User({
           console.log(error);
         }
       })(userData.userId, authUser.userId);
-  }, []);
+  }, [userData.userId]);
 
   // Get users's uploaded posts to show in user-profile-gallary
   useEffect(() => {
@@ -77,7 +77,7 @@ function User({
         setPosts([...postList]);
       }
     })();
-  }, []);
+  }, [userData.userId]);
 
   const handelFollowingSatus = () => {
     if (!isInFollowList) {
@@ -191,6 +191,7 @@ function User({
                           setCurrentUser({
                             userId: userData.userId,
                             userName: userData.userName,
+                            profilePic: userData.profilePic,
                           })
                         );
                       }}
@@ -212,6 +213,7 @@ function User({
                           setCurrentUser({
                             userId: userData.userId,
                             userName: userData.userName,
+                            profilePic: userData.profilePic,
                           })
                         );
                       }}
