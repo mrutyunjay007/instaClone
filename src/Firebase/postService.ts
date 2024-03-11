@@ -1,5 +1,6 @@
 import {
   CollectionReference,
+  FieldValue,
   Firestore,
   addDoc,
   collection,
@@ -8,14 +9,19 @@ import {
   getDoc,
   getDocs,
   getFirestore,
+  limit,
+  orderBy,
   query,
+  serverTimestamp,
   setDoc,
+  startAfter,
   updateDoc,
   where,
 } from "firebase/firestore";
 import { FirebaseStorage, getStorage } from "firebase/storage";
 import { app } from "./config";
 import { uploadImageInServerService } from "./UploadImageInServerService";
+// import { IPosts } from "../components/Home";
 
 class PostService {
   db: Firestore;
@@ -29,9 +35,15 @@ class PostService {
   }
 
   // ...........Get-Post.................
-  async getAllPosts() {
+  async getNextPosts(lastVisible: FieldValue) {
     try {
-      const dataRef = await getDocs(this.postCollectionRef);
+      const first = query(
+        collection(this.db, "Posts"),
+        orderBy("createdAt"),
+        startAfter(lastVisible),
+        limit(5)
+      );
+      const dataRef = await getDocs(first);
       const postDataList = dataRef.docs.map((doc) => {
         const docData = doc.data();
 
@@ -43,6 +55,34 @@ class PostService {
           postUrl: docData.postUrl,
           caption: docData.caption,
           likeCount: docData.likeCount,
+          createdAt: docData.createdAt,
+        };
+      });
+      return postDataList;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async getFirstPosts() {
+    try {
+      const first = query(
+        collection(this.db, "Posts"),
+        orderBy("createdAt"),
+        limit(2)
+      );
+      const dataRef = await getDocs(first);
+      const postDataList = dataRef.docs.map((doc) => {
+        const docData = doc.data();
+
+        return {
+          postId: doc.id,
+          userId: docData.userId,
+          userName: docData.userName,
+          profilePic: docData.profilePicture,
+          postUrl: docData.postUrl,
+          caption: docData.caption,
+          likeCount: docData.likeCount,
+          createdAt: docData.createdAt,
         };
       });
       return postDataList;
@@ -107,6 +147,7 @@ class PostService {
           postUrl: url,
           caption,
           likeCount: 0,
+          createdAt: serverTimestamp(), // This adds the server timestamp
         };
 
         // add in Post collection and get id as return

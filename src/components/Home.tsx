@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import TopBar from "./TopBar";
 import Post from "./Post";
 // import { useDispatch, useSelector } from "react-redux";
 
 import { postService } from "../Firebase/postService";
-import { TPostList } from "../Redux/Slice/CurrentPostSlice";
+import { IPost, TPostList } from "../Redux/Slice/CurrentPostSlice";
 import { RootState } from "../Redux/store";
 import { newPostUpLoadingDone } from "../Redux/Slice/CreatePostSlice";
 import { AtHome } from "../Redux/Slice/NavSlice";
 import PostsLoader from "./SmallComponents/loaders/PostsLoader";
-
+import { FieldValue } from "firebase/firestore";
+export interface IPosts extends IPost {
+  createdAt: FieldValue;
+}
 function Home() {
   const newPost = useSelector(
     (state: RootState) => state.CreatePostInfo.uploadedPost
@@ -21,21 +24,27 @@ function Home() {
 
   const [isLoding, setIsLoding] = useState(true);
 
+  // for infinite scroll
+  const [lastElement, setLastElement] = useState<FieldValue>();
+  const [postCount, setPostCount] = useState(0);
+  const intersectionObserverRef = useRef(null);
+
   // activate home icon when back from other pages
   useEffect(() => {
     dispatch(AtHome());
   }, []);
 
-  // Retrive all Post
+  // Retrive First Posts
   useEffect(() => {
     (async () => {
       try {
-        const postList = await postService.getAllPosts();
+        const postList = await postService.getFirstPosts();
         console.log(postList);
 
         if (postList) {
-          // dispatch(setPostList([...postList]));
           setPostList([...postList]);
+          setPostCount(postList.length - 1);
+          setLastElement(postList[postList.length - 1].createdAt);
           setIsLoding(false);
         }
       } catch (error) {
@@ -43,6 +52,39 @@ function Home() {
       }
     })();
   }, []);
+
+  // Retrive Next Posts
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && postCount >= 1) {
+        (async () => {
+          try {
+            const postList = await postService.getNextPosts(
+              lastElement as FieldValue
+            );
+
+            if (postList) {
+              console.log(postList);
+
+              setPostList((pre) => [...pre, ...postList]);
+              setLastElement(postList[postList.length - 1].createdAt);
+              setPostCount((pre) => pre + (postList.length - 1));
+              setIsLoding(false);
+            }
+          } catch (error) {}
+        })();
+      }
+    });
+
+    intersectionObserverRef.current &&
+      observer.observe(intersectionObserverRef.current);
+
+    return () => {
+      if (intersectionObserverRef.current) {
+        observer.unobserve(intersectionObserverRef.current);
+      }
+    };
+  }, [postCount, lastElement]);
 
   // Add new Post
   useEffect(() => {
@@ -78,6 +120,7 @@ function Home() {
             <Post key={post.postId} posts={{ ...post }}></Post>
           ))
         )}
+        <div ref={intersectionObserverRef}></div>
       </div>
       {/* </div> */}
       {/* </div> */}
