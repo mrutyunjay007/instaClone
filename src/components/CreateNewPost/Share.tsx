@@ -4,12 +4,14 @@ import { useState } from "react";
 import { postService } from "../../Firebase/postService";
 
 import {
-  newPostUpLoadingDone,
+  newPostUpLoadingContinue,
   setUploadedPost,
 } from "../../Redux/Slice/CreatePostSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { upadateNumberOfPost } from "../../Redux/Slice/UserSlice";
 import ImageFileCompretion from "../../utility/ImageFileCompretion";
+import BackBtn from "../SmallComponents/BackBtn";
+import Image from "../SmallComponents/Image";
 
 function Share() {
   const { postUrl, postMetaData } = useSelector(
@@ -39,11 +41,10 @@ function Share() {
         caption,
         currentNumberOfPost: authUser.userData.postNumber,
       });
-      if (postData) {
+      if (postData && postData.postUrl !== undefined) {
         dispatch(setUploadedPost({ ...postData }));
         dispatch(upadateNumberOfPost());
         setLoading(false);
-        navigate("/");
       }
     }
   };
@@ -53,56 +54,48 @@ function Share() {
   }
 
   return (
-    <div className="w-full">
+    <>
       {/* nav */}
-      <div className="w-full md:pl-[80px] lg:pl-[250px] sticky h-[9vh] flex justify-between p-3 items-center border-b-2 border-s-slate-100">
-        {/* <span>
-          <img src={BackIcon} alt="" />
-        </span> */}
-        <span className=" dark:text-color font-bold text-2xl cursor-pointer ">
-          Create New Post
-        </span>
+      <div className="w-full   sticky h-[5.1rem] flex justify-between p-3 items-center border-b-2 border-s-slate-100">
+        <div className="flex gap-3 justify-start items-center">
+          <BackBtn></BackBtn>
+          <span className=" dark:text-color font-bold text-2xl cursor-pointer ">
+            Create New Post
+          </span>
+        </div>
         <div className="flex gap-3 py-2 items-center justify-center ">
           <span
             className="  rounded-md bg-[#0095f6] text-white font-semibold px-3 py-2  cursor-pointer"
             onClick={() => {
+              dispatch(newPostUpLoadingContinue(true));
               handelShare();
+              navigate("/");
             }}
           >
             Share
           </span>
-          <Link to="/upLoadPost">
-            <span
-              className="  rounded-md  bg-red-500 text-white font-semibold px-3 py-2 cursor-pointer "
-              onClick={() => {
-                dispatch(newPostUpLoadingDone());
-              }}
-            >
-              Cancel
-            </span>
-          </Link>
         </div>
       </div>
 
       {/* post */}
-      <div className="flex justify-center ">
-        <div className=" w-full flex flex-col md:w-1/2 lg:w-1/4 h-[91vh] items-center justify-start gap-2  ">
-          <span className="w-full flex-1 bg-slate-500 mt-3 ">
-            <img className="" src={postUrl} alt="" />
+      <div className="w-full h-[calc(100vh-5.1rem)]  px-5 flex justify-center items-center ">
+        <div className=" w-full h-[calc(100vh-5.1rem)] p-5 md:p-0  md:h-[368px]   md:border-2 flex flex-col md:flex-row justify-center items-center ">
+          <span className="w-full h-1/2 md:h-full  ">
+            <Image url={postUrl} rounded={false} />
           </span>
-          <span className="mt-2 w-full h-1/4 font-semibold  border-s-slate-100 border-2 p-1 rounded-lg  ">
+          <span className="w-full  h-full  font-semibold">
             <textarea
               onChange={(e) => {
                 setCaption(e.target.value);
               }}
               value={caption}
-              className="w-full h-full rounded-lg p-2"
+              className="w-full h-full  p-2 focus:outline-none resize-none"
               placeholder="write caption..."
             ></textarea>
           </span>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

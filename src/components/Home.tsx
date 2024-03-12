@@ -7,16 +7,23 @@ import Post from "./Post";
 import { postService } from "../Firebase/postService";
 import { IPost, TPostList } from "../Redux/Slice/CurrentPostSlice";
 import { RootState } from "../Redux/store";
-import { newPostUpLoadingDone } from "../Redux/Slice/CreatePostSlice";
+import {
+  newPostUpLoadingContinue,
+  newPostUpLoadingDone,
+} from "../Redux/Slice/CreatePostSlice";
 import { AtHome } from "../Redux/Slice/NavSlice";
 import PostsLoader from "./SmallComponents/loaders/PostsLoader";
 import { FieldValue } from "firebase/firestore";
+import Spiner from "./SmallComponents/loaders/Spiner";
 export interface IPosts extends IPost {
   createdAt: FieldValue;
 }
 function Home() {
   const newPost = useSelector(
     (state: RootState) => state.CreatePostInfo.uploadedPost
+  );
+  const loadingUpLoadedPost = useSelector(
+    (state: RootState) => state.CreatePostInfo.loadingUpLoadedPost
   );
 
   const dispatch = useDispatch();
@@ -38,13 +45,12 @@ function Home() {
   useEffect(() => {
     (async () => {
       try {
-        const postList = await postService.getFirstPosts();
-        console.log(postList);
+        const firstPostList = await postService.getFirstPosts();
 
-        if (postList) {
-          setPostList([...postList]);
-          setPostCount(postList.length - 1);
-          setLastElement(postList[postList.length - 1].createdAt);
+        if (firstPostList) {
+          setPostList([...firstPostList]);
+          setPostCount(firstPostList.length);
+          setLastElement(firstPostList[firstPostList.length - 1].createdAt);
           setIsLoding(false);
         }
       } catch (error) {
@@ -56,19 +62,19 @@ function Home() {
   // Retrive Next Posts
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && postCount >= 1) {
+      if (entries[0].isIntersecting && postCount >= 5) {
         (async () => {
           try {
-            const postList = await postService.getNextPosts(
+            const nextPostList = await postService.getNextPosts(
               lastElement as FieldValue
             );
 
-            if (postList) {
-              console.log(postList);
+            if (nextPostList) {
+              console.log(nextPostList);
 
-              setPostList((pre) => [...pre, ...postList]);
-              setLastElement(postList[postList.length - 1].createdAt);
-              setPostCount((pre) => pre + (postList.length - 1));
+              setPostList((pre) => [...pre, ...nextPostList]);
+              setLastElement(nextPostList[nextPostList.length - 1].createdAt);
+              setPostCount(nextPostList.length);
               setIsLoding(false);
             }
           } catch (error) {}
@@ -99,7 +105,8 @@ function Home() {
         likeCount: newPost.likeCount,
       };
 
-      setPostList((pre) => [...pre, post]);
+      setPostList((pre) => [post, ...pre]);
+      dispatch(newPostUpLoadingContinue(false));
       dispatch(newPostUpLoadingDone());
       dispatch(AtHome());
     }
@@ -110,9 +117,21 @@ function Home() {
       <div className=" dark:bg-gray-700 w-full sticky  top-0  md:hidden">
         <TopBar></TopBar>
       </div>
-      {/* <div className=" flex  justify-center items-center w-full"> */}
-      {/* <div className=" px-10"> */}
-      <div className=" w-full px-5 md:px-0 md:w-[468px]">
+
+      <div className=" w-full px-5 pb-[5.1rem]  md:px-0 md:w-[468px]">
+        {/* uploading new post */}
+        {loadingUpLoadedPost && (
+          <div className="w-full p-5 rounded-xl mt-2 border-2 border-slate-200 flex justify-start gap-3 items-center ">
+            {" "}
+            <span>
+              {" "}
+              <Spiner w={6} h={6}></Spiner>
+            </span>
+            <span className="font-bold">new post uploading...</span>{" "}
+          </div>
+        )}
+
+        {/* render present posts */}
         {isLoding ? (
           <PostsLoader></PostsLoader>
         ) : (
@@ -120,10 +139,10 @@ function Home() {
             <Post key={post.postId} posts={{ ...post }}></Post>
           ))
         )}
+
+        {/* observer for infinite scrolling */}
         <div ref={intersectionObserverRef}></div>
       </div>
-      {/* </div> */}
-      {/* </div> */}
     </>
   );
 }

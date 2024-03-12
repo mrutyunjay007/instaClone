@@ -24,6 +24,8 @@ function Create() {
           <span>
             <img src={uploadIcon} alt="" />
           </span>
+
+          {/* select post-image */}
           <span
             className="mt-2  bg-[#0095f6] text-white font-semibold p-3 rounded-lg cursor-pointer "
             onClick={() => {

@@ -68,7 +68,7 @@ class PostService {
       const first = query(
         collection(this.db, "Posts"),
         orderBy("createdAt"),
-        limit(2)
+        limit(5)
       );
       const dataRef = await getDocs(first);
       const postDataList = dataRef.docs.map((doc) => {
@@ -131,7 +131,7 @@ class PostService {
     currentNumberOfPost: number;
   }) {
     try {
-      if (postMetaData != null) {
+      if (postMetaData !== null) {
         // get url
         const url =
           await uploadImageInServerService.putNewImageInFirebaseStorage({

@@ -16,6 +16,7 @@ interface INewPost {
     postMetaData: null | File;
   };
   uploadedPost: IUploadedPost;
+  loadingUpLoadedPost: boolean;
 }
 
 const emptyState: INewPost = {
@@ -32,6 +33,7 @@ const emptyState: INewPost = {
     caption: "",
     likeCount: 0,
   },
+  loadingUpLoadedPost: false,
 };
 
 const initialState: INewPost = emptyState;
@@ -50,18 +52,26 @@ const createPostSlice = createSlice({
     setUploadedPost(state, actions: PayloadAction<IUploadedPost>) {
       state.uploadedPost.postId = actions.payload.postId;
       state.uploadedPost.userId = actions.payload.userId;
+      state.uploadedPost.postUrl = actions.payload.postUrl;
       state.uploadedPost.userName = actions.payload.userName;
       state.uploadedPost.profilePic = actions.payload.profilePic;
       state.uploadedPost.caption = actions.payload.caption;
       state.uploadedPost.likeCount = actions.payload.likeCount;
     },
 
-    newPostUpLoadingDone(state) {
-      state = emptyState;
+    newPostUpLoadingDone() {
+      return emptyState;
+    },
+    newPostUpLoadingContinue(state, actions: PayloadAction<boolean>) {
+      state.loadingUpLoadedPost = actions.payload;
     },
   },
 });
 
 export default createPostSlice.reducer;
-export const { setSelectedPost, setUploadedPost, newPostUpLoadingDone } =
-  createPostSlice.actions;
+export const {
+  setSelectedPost,
+  setUploadedPost,
+  newPostUpLoadingDone,
+  newPostUpLoadingContinue,
+} = createPostSlice.actions;

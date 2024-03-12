@@ -1,4 +1,3 @@
-import { VscAccount } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
 import { useEffect, useState } from "react";
@@ -8,6 +7,7 @@ import {
   setLoading,
 } from "../../Redux/Slice/CommentSlice";
 import { commentService } from "../../Firebase/commentService";
+import ProfilePic from "../SmallComponents/ProfilePic";
 
 export interface IComment {
   userId: string;
@@ -98,13 +98,15 @@ function Comment({
   }, [reply.replied]);
 
   return (
-    <div className="main-container">
+    <div className="main-container mt-2">
       {/* comments */}
       <div className=" flex flex-col gap-1">
-        <div className={`  flex gap-1 p-3 bg-slate-200  rounded-md`}>
+        <div
+          className={`  flex gap-2 p-5 items-center border-2 border-slate-200   rounded-lg`}
+        >
           {/* profilePic */}
-          <span>
-            <VscAccount className="w-8 h-8"></VscAccount>
+          <span className="size-7">
+            <ProfilePic url={profilePic} w={"full"} h={"full"}></ProfilePic>
           </span>
           {/* userName */}
           <span className="font-bold">{userName}</span>
@@ -116,7 +118,7 @@ function Comment({
         <div className=" flex gap-3">
           {/* Reply btn */}
           <span
-            className="font-bold cursor-pointer"
+            className="font-semibold cursor-pointer"
             onClick={() => {
               dispatch(repling({ userId, userName, commentId, repling: true }));
             }}
@@ -125,7 +127,9 @@ function Comment({
           </span>
           {/* show reply */}
           <span
-            className={``}
+            className={`cursor-pointer ${
+              showReplies && "text-red-500 hover:text-red-600"
+            }`}
             onClick={() => {
               setShowReplies(!showReplies);
             }}
