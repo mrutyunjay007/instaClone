@@ -33,8 +33,13 @@ function SignUp({ changeLog }: { changeLog: () => void }) {
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className=" flex flex-col justify-center items-center h-1/2 w-1/2 md:w-1/2 lg:w-1/2 border-2 border-s-slate-100 drop-shadow-lg rounded-lg ">
-        <span className=" cursor-pointer">
+      <div className=" flex flex-col justify-center items-center h-1/2 w-1/2 md:w-1/2 lg:w-1/2 md:border-2 border-slate-100 md:drop-shadow-lg rounded-lg ">
+        <span
+          className=" cursor-pointer"
+          onClick={() => {
+            setSignUp(true);
+          }}
+        >
           {" "}
           <img src={instaIcon} alt="" />
         </span>
