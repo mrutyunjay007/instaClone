@@ -40,9 +40,10 @@ function Search() {
           Search
         </span>
       </div>
+
       <div className="w-full h-[calc(100vh-18vh)] flex flex-col justify-center items-center">
-        <div className=" flex flex-col gap-2 justify-center items-center h-1/2 w-1/2 md:w-1/2 lg:w-1/2  ">
-          <div className="  flex justify-center items-center  w-full rounded h-1/5 px-3 border-2 border-s-slate-300">
+        <div className=" flex flex-col gap-2 justify-center items-center h-full w-full px-10 md:px-0 md:w-1/2 lg:w-1/2  ">
+          <div className="  flex justify-center items-center  w-full rounded h-[4.1rem] px-3 border-2 border-slate-300">
             <input
               type="text"
               value={search}
